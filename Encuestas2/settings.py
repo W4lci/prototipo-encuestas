@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-kvh8=^qo0qp^de6+7ni8w6(5ccucmapzya!@h%0s4bnv2=qvx*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.219.1"]
+ALLOWED_HOSTS = ["192.168.219.1", "localhost", "127.0.0.1", "survey", "answer", "reprts", "exportcsvfn", "*"]
 
 
 # Application definition
