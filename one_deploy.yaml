@@ -2,6 +2,10 @@
   hosts: localhost
   vars_files:
     - vars.yaml
+  vars:
+    ssh_user: "encuesta"
+    ssh_key_path: "/mnt/c/Users/willi/.ssh/id_ed25519"
+    sudo_password: "12345678"
   tasks:
     - name: "Crear la VM desde una plantilla"
       proxmox_kvm:
@@ -18,7 +22,7 @@
         net:
           net0: "virtio,bridge=vmbr0,ip={{ vm_ip }}/24,gw=192.168.219.1"
         node: "{{ proxmox_node }}"
-        sshkeys: "{{ lookup('file', 'key.pub') }}"
+        sshkeys: "{{ lookup('file', ssh_key_path + '.pub') }}"
         state: present
         full: true
         timeout: 300
@@ -35,7 +39,7 @@
         api_user: "{{ proxmox_user }}"
         api_password: "{{ proxmox_password }}"
         api_port: 8006
-        vmid: "{{ vm_result.vmid }}"
+        name: "{{ vm_name }}"
         state: started
       register: start_result
     
@@ -47,26 +51,9 @@
         timeout: 600
       when: start_result.changed
     
-    - name: "Preparar clave SSH"
-      block:
-        - name: "Crear directorio .ssh en WSL"
-          ansible.builtin.command:
-            cmd: "mkdir -p ~/.ssh"
-          ignore_errors: yes
-        
-        - name: "Copiar clave privada a WSL"
-          ansible.builtin.command:
-            cmd: "cp /mnt/c/Users/willi/.ssh/id_ed25519 ~/.ssh/"
-          ignore_errors: yes
-        
-        - name: "Ajustar permisos de la clave"
-          ansible.builtin.command:
-            cmd: "chmod 600 ~/.ssh/id_ed25519"
-          ignore_errors: yes
-
     - name: "Conectarse a la VM usando SSH"
       ansible.builtin.command:
-        cmd: "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_ed25519 encuesta@{{ vm_ip }} 'echo VM is online'"
+        cmd: "ssh -i {{ ssh_key_path }} {{ ssh_user }}@{{ vm_ip }} 'echo VM is online'"
       register: ssh_result
       ignore_errors: yes
       retries: 3
@@ -76,25 +63,39 @@
       debug:
         msg: "SSH Status: {{ 'Connected' if ssh_result.rc == 0 else 'Failed' }}"
     
+    - name: "Esperar a que termine unattended-upgrades"
+      ansible.builtin.command:
+        cmd: "ssh -i {{ ssh_key_path }} {{ ssh_user }}@{{ vm_ip }} 'echo {{ sudo_password }} | sudo -S killall unattended-upgr || true && echo {{ sudo_password }} | sudo -S rm -f /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/cache/apt/archives/lock || true && sleep 5'"
+      when: ssh_result.rc == 0
+    
     - name: "Instalar Docker en la VM"
       ansible.builtin.command:
-        cmd: "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_ed25519 encuesta@{{ vm_ip }} 'sudo apt-get update && sudo apt-get install -y docker.io docker-compose'"
-      register: docker_install_result
+        cmd: "ssh -i {{ ssh_key_path }} {{ ssh_user }}@{{ vm_ip }} 'echo {{ sudo_password }} | sudo -S dpkg --configure -a && echo {{ sudo_password }} | sudo -S apt-get update && echo {{ sudo_password }} | sudo -S apt-get install -y docker.io docker-compose'"
       when: ssh_result.rc == 0
 
-    - name: "Crear directorio de aplicación en la VM"
+    - name: "Agregar usuario al grupo docker"
       ansible.builtin.command:
-        cmd: "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_ed25519 encuesta@{{ vm_ip }} 'sudo mkdir -p /home/encuesta/app'"
+        cmd: "ssh -i {{ ssh_key_path }} {{ ssh_user }}@{{ vm_ip }} 'echo {{ sudo_password }} | sudo -S usermod -aG docker encuesta'"
       when: ssh_result.rc == 0
 
-    - name: "Enviar docker-compose.yml a la VM"
+    - name: "Iniciar Docker"
       ansible.builtin.command:
-        cmd: "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_ed25519 docker-compose.yml encuesta@{{ vm_ip }}:/home/encuesta/"
+        cmd: "ssh -i {{ ssh_key_path }} {{ ssh_user }}@{{ vm_ip }} 'echo {{ sudo_password }} | sudo -S systemctl start docker'"
       when: ssh_result.rc == 0
 
-    - name: "Enviar archivos de aplicación a la VM"
+    - name: "Crear directorio de aplicación"
       ansible.builtin.command:
-        cmd: "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_ed25519 -r {{ item }} encuesta@{{ vm_ip }}:/home/encuesta/app/"
+        cmd: "ssh -i {{ ssh_key_path }} {{ ssh_user }}@{{ vm_ip }} 'mkdir -p /home/encuesta/app'"
+      when: ssh_result.rc == 0
+
+    - name: "Enviar docker-compose.yml"
+      ansible.builtin.command:
+        cmd: "scp -i {{ ssh_key_path }} docker-compose.yml {{ ssh_user }}@{{ vm_ip }}:/home/encuesta/app/"
+      when: ssh_result.rc == 0
+
+    - name: "Enviar archivos de aplicación"
+      ansible.builtin.command:
+        cmd: "scp -i {{ ssh_key_path }} -r {{ item }} {{ ssh_user }}@{{ vm_ip }}:/home/encuesta/app/"
       loop:
         - "Answer/"
         - "Encuestas2/"
@@ -105,32 +106,20 @@
         - "requirements.txt"
       when: ssh_result.rc == 0
 
-    - name: "Instalar dependencias de Python en la VM"
+    - name: "Ejecutar docker-compose"
       ansible.builtin.command:
-        cmd: "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_ed25519 encuesta@{{ vm_ip }} 'cd /home/encuesta/app && sudo apt-get install -y python3-pip && pip3 install -r requirements.txt'"
-      register: pip_install_result
+        cmd: "ssh -i {{ ssh_key_path }} {{ ssh_user }}@{{ vm_ip }} 'cd /home/encuesta/app && sg docker -c \"docker-compose up -d --build\"'"
       when: ssh_result.rc == 0
-      ignore_errors: yes
-
-    - name: "Iniciar aplicación con Docker Compose"
-      ansible.builtin.command:
-        cmd: "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_ed25519 encuesta@{{ vm_ip }} 'cd /home/encuesta && docker-compose up -d'"
-      register: docker_compose_result
-      when: ssh_result.rc == 0
-      ignore_errors: yes
     
-    - name: "Configurar firewall y abrir puertos"
+    - name: "Configurar firewall"
       ansible.builtin.command:
-        cmd: "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_ed25519 encuesta@{{ vm_ip }} 'sudo ufw --force enable && sudo ufw allow 22 && sudo ufw allow 8000 && sudo ufw allow 8001 && sudo ufw allow 8002 && sudo ufw allow 8003 && sudo ufw reload'"
+        cmd: "ssh -i {{ ssh_key_path }} {{ ssh_user }}@{{ vm_ip }} 'echo {{ sudo_password }} | sudo -S ufw --force enable && echo {{ sudo_password }} | sudo -S ufw allow 22 && echo {{ sudo_password }} | sudo -S ufw allow 8000 && echo {{ sudo_password }} | sudo -S ufw allow 8001 && echo {{ sudo_password }} | sudo -S ufw allow 8002 && echo {{ sudo_password }} | sudo -S ufw allow 8003'"
       when: ssh_result.rc == 0
-      ignore_errors: yes
     
-    - name: "Mostrar estado final del despliegue"
+    - name: "Mostrar estado final"
       debug:
         msg: 
-          - "VM ID: {{ vm_result.vmid }}"
-          - "VM IP: {{ vm_ip }}"
-          - "Estado SSH: {{ 'Conectado' if ssh_result.rc == 0 else 'Error de conexión' }}"
-          - "Docker Compose: {{ 'Iniciado' if docker_compose_result is defined and docker_compose_result.rc == 0 else 'Error o no ejecutado' }}"
-      when: vm_result is defined
+          - "VM: {{ vm_name }}"
+          - "IP: {{ vm_ip }}"
+          - "SSH: {{ 'OK' if ssh_result.rc == 0 else 'Error' }}"
 
