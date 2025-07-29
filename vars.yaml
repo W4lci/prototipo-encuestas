@@ -1,0 +1,13 @@
+vm_name: "EncuestasApp"
+proxmox_host: "192.168.219.130"
+proxmox_user: "root@pam"
+proxmox_password: "12345678"
+proxmox_node: "pve"
+template: "Encuestas"
+new_vm_id: 100
+vm_ip: "192.168.219.140"
+vm_memory: 3072
+vm_cores: 2
+vm_disk_size: 20
+storage: "local-lvm"
+

@@ -8,6 +8,9 @@ class Answer(models.Model):
     id_option = models.IntegerField(null=True)
     answer = models.TextField(null = True)
 
+    class Meta:
+        db_table = 'answer_answer'
+
     def __str__(self):
         return f"Answer {self.id} for Question {self.id_question}"
 

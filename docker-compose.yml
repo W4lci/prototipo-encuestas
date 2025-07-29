@@ -1,28 +1,33 @@
-version: "3.9"
-
 services: 
   db_survey:
     image: mysql:8.0
-    container_name: db_survey
+    container_name: survey_db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: survey_db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-      MYSQL_PORT: "3306"
     ports:
       - "3308:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+      
   db_answer:
     image: mysql:8.0
-    container_name: db_answer
+    container_name: answer_db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: answer_db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-      MYSQL_PORT: "3307"
     ports:
       - "3309:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 
   survey:
     build:
@@ -31,13 +36,14 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - MYSQL_DATABASE=Encuestas
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=Server1234
-      - MYSQL_HOST=localhost
+      - MYSQL_DATABASE=survey_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_HOST=db_survey
       - MYSQL_PORT=3306
     depends_on:
-      - db_survey
+      db_survey:
+        condition: service_healthy
 
   answer:
     build:
@@ -46,13 +52,14 @@ services:
     ports:
       - "8001:8000"
     environment:
-      - MYSQL_DATABASE=Respuestas
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=Server1234
-      - MYSQL_HOST=localhost
+      - MYSQL_DATABASE=answer_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_HOST=db_answer
       - MYSQL_PORT=3306
     depends_on:
-      - db_answer
+      db_answer:
+        condition: service_healthy
 
   reprts:
     build:
@@ -60,19 +67,22 @@ services:
       dockerfile: ./Report/dockerfile
     ports:
       - "8002:8000"
-    depends_on:
-      - db_answer
     environment:
-      - MYSQL_DATABASE=Respuestas
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=Server1234
-      - MYSQL_HOST=localhost
-      - MYSQL_PORT=3307
-    
+      - MYSQL_DATABASE=answer_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_HOST=db_answer
+      - MYSQL_PORT=3306
+    depends_on:
+      db_answer:
+        condition: service_healthy
+      answer:
+        condition: service_started
+
   exportcsvfn:
     build:
-      context: ./ExportCsvFn
-      dockerfile: dockerfile
+      context: ./
+      dockerfile: ./ExportCsvFn/dockerfile
     ports:
       - "8003:8000"
 
