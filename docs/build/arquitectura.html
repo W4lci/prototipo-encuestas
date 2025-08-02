@@ -1,0 +1,225 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arquitectura del Sistema &mdash; documentación de Sistema de Encuestas - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=4936afed"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=f85f4cfb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="API REST Endpoints" href="api.html" />
+    <link rel="prev" title="Instalación y Configuración" href="instalacion.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Sistema de Encuestas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="instalacion.html">Instalación y Configuración</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="instalacion.html#requisitos-basicos">Requisitos Básicos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="instalacion.html#instalacion">Instalación</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="instalacion.html#clonar-el-repositorio">1. Clonar el Repositorio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="instalacion.html#despliegue-automatico">2. Despliegue Automático</a></li>
+<li class="toctree-l3"><a class="reference internal" href="instalacion.html#despliegue-local">3. Despliegue Local</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="instalacion.html#verificacion">Verificación</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Arquitectura del Sistema</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#descripcion-general">Descripción General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estructura-del-proyecto">Estructura del Proyecto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#microservicios">Microservicios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#survey-service-servicio-de-encuestas">Survey Service (Servicio de Encuestas)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#answer-service-servicio-de-respuestas">Answer Service (Servicio de Respuestas)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#report-service-servicio-de-reportes">Report Service (Servicio de Reportes)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exportcsv-function-funcion-faas">ExportCSV Function (Función FaaS)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#base-de-datos">Base de Datos</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API REST Endpoints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#survey-service-servicio-de-encuestas">Survey Service (Servicio de Encuestas)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#gestion-de-encuestas">Gestión de Encuestas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#gestion-de-preguntas">Gestión de Preguntas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#gestion-de-opciones">Gestión de Opciones</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#answer-service-servicio-de-respuestas">Answer Service (Servicio de Respuestas)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#report-service-servicio-de-reportes">Report Service (Servicio de Reportes)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faas.html">Function as a Service (FaaS)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faas.html#exportcsv-function">ExportCSV Function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faas.html#descripcion">Descripción</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faas.html#configuracion">Configuración</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faas.html#endpoints">Endpoints</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="faas.html#health-check">Health Check</a></li>
+<li class="toctree-l4"><a class="reference internal" href="faas.html#exportar-a-csv">Exportar a CSV</a></li>
+<li class="toctree-l4"><a class="reference internal" href="faas.html#verificar-estado">Verificar Estado</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="faas.html#uso">Uso</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sistema de Encuestas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Arquitectura del Sistema</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/arquitectura.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="arquitectura-del-sistema">
+<h1>Arquitectura del Sistema<a class="headerlink" href="#arquitectura-del-sistema" title="Link to this heading"></a></h1>
+<section id="descripcion-general">
+<h2>Descripción General<a class="headerlink" href="#descripcion-general" title="Link to this heading"></a></h2>
+<p>El sistema implementa una arquitectura de microservicios con Django REST Framework, donde cada servicio maneja una responsabilidad específica.</p>
+</section>
+<section id="estructura-del-proyecto">
+<h2>Estructura del Proyecto<a class="headerlink" href="#estructura-del-proyecto" title="Link to this heading"></a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Encuestas2/
+├── Survey/         # Servicio de encuestas
+├── Answer/         # Servicio de respuestas
+├── Report/         # Servicio de reportes
+├── ExportCsvFn/    # Function as a Service (FaaS)
+└── docker-compose.yml
+</pre></div>
+</div>
+</section>
+<section id="microservicios">
+<h2>Microservicios<a class="headerlink" href="#microservicios" title="Link to this heading"></a></h2>
+<section id="survey-service-servicio-de-encuestas">
+<h3>Survey Service (Servicio de Encuestas)<a class="headerlink" href="#survey-service-servicio-de-encuestas" title="Link to this heading"></a></h3>
+<p><strong>Responsabilidad</strong>: Gestión de encuestas, preguntas y opciones.</p>
+<p><strong>Modelos principales</strong>:</p>
+<ul class="simple">
+<li><p><strong>Survey</strong>: Encuesta con nombre, descripción y fecha de creación</p></li>
+<li><p><strong>Question</strong>: Pregunta asociada a una encuesta (tipo abierta o cerrada)</p></li>
+<li><p><strong>Option</strong>: Opción de respuesta para preguntas cerradas</p></li>
+</ul>
+</section>
+<section id="answer-service-servicio-de-respuestas">
+<h3>Answer Service (Servicio de Respuestas)<a class="headerlink" href="#answer-service-servicio-de-respuestas" title="Link to this heading"></a></h3>
+<p><strong>Responsabilidad</strong>: Gestión de respuestas de usuarios a las encuestas.</p>
+<p><strong>Modelos principales</strong>:</p>
+<ul class="simple">
+<li><p><strong>Answer</strong>: Respuesta que puede ser texto libre o selección de opción</p></li>
+</ul>
+</section>
+<section id="report-service-servicio-de-reportes">
+<h3>Report Service (Servicio de Reportes)<a class="headerlink" href="#report-service-servicio-de-reportes" title="Link to this heading"></a></h3>
+<p><strong>Responsabilidad</strong>: Generación de reportes y estadísticas de encuestas.</p>
+<p><strong>Funcionalidad</strong>:</p>
+<ul class="simple">
+<li><p>Obtiene datos de los otros servicios</p></li>
+<li><p>Genera reportes consolidados</p></li>
+<li><p>Proporciona estadísticas de respuestas</p></li>
+</ul>
+</section>
+<section id="exportcsv-function-funcion-faas">
+<h3>ExportCSV Function (Función FaaS)<a class="headerlink" href="#exportcsv-function-funcion-faas" title="Link to this heading"></a></h3>
+<p><strong>Responsabilidad</strong>: Exportación de datos a formato CSV.</p>
+<p><strong>Características</strong>:</p>
+<ul class="simple">
+<li><p>Función serverless implementada con FastAPI</p></li>
+<li><p>Script bash para procesamiento con csvkit</p></li>
+<li><p>Almacenamiento en directorio <code class="docutils literal notranslate"><span class="pre">./exports/</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="base-de-datos">
+<h2>Base de Datos<a class="headerlink" href="#base-de-datos" title="Link to this heading"></a></h2>
+<p><strong>Survey Service</strong>: Base de datos <code class="docutils literal notranslate"><span class="pre">Encuestas</span></code>
+<strong>Answer Service</strong>: Base de datos <code class="docutils literal notranslate"><span class="pre">Respuestas</span></code>
+<strong>Report Service</strong>: Acceso a ambas bases de datos</p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Cada microservicio mantiene su propia base de datos siguiendo el patrón Database per Service.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="instalacion.html" class="btn btn-neutral float-left" title="Instalación y Configuración" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="API REST Endpoints" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Equipo Desarrollo.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

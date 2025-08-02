@@ -1,0 +1,409 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API REST Endpoints &mdash; documentación de Sistema de Encuestas - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=4936afed"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=f85f4cfb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Function as a Service (FaaS)" href="faas.html" />
+    <link rel="prev" title="Arquitectura del Sistema" href="arquitectura.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Sistema de Encuestas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="instalacion.html">Instalación y Configuración</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="instalacion.html#requisitos-basicos">Requisitos Básicos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="instalacion.html#instalacion">Instalación</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="instalacion.html#clonar-el-repositorio">1. Clonar el Repositorio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="instalacion.html#despliegue-automatico">2. Despliegue Automático</a></li>
+<li class="toctree-l3"><a class="reference internal" href="instalacion.html#despliegue-local">3. Despliegue Local</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="instalacion.html#verificacion">Verificación</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="arquitectura.html">Arquitectura del Sistema</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="arquitectura.html#descripcion-general">Descripción General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arquitectura.html#estructura-del-proyecto">Estructura del Proyecto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arquitectura.html#microservicios">Microservicios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="arquitectura.html#survey-service-servicio-de-encuestas">Survey Service (Servicio de Encuestas)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="arquitectura.html#answer-service-servicio-de-respuestas">Answer Service (Servicio de Respuestas)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="arquitectura.html#report-service-servicio-de-reportes">Report Service (Servicio de Reportes)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="arquitectura.html#exportcsv-function-funcion-faas">ExportCSV Function (Función FaaS)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="arquitectura.html#base-de-datos">Base de Datos</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API REST Endpoints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#survey-service-servicio-de-encuestas">Survey Service (Servicio de Encuestas)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gestion-de-encuestas">Gestión de Encuestas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gestion-de-preguntas">Gestión de Preguntas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gestion-de-opciones">Gestión de Opciones</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#answer-service-servicio-de-respuestas">Answer Service (Servicio de Respuestas)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#report-service-servicio-de-reportes">Report Service (Servicio de Reportes)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faas.html">Function as a Service (FaaS)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faas.html#exportcsv-function">ExportCSV Function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faas.html#descripcion">Descripción</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faas.html#configuracion">Configuración</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faas.html#endpoints">Endpoints</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="faas.html#health-check">Health Check</a></li>
+<li class="toctree-l4"><a class="reference internal" href="faas.html#exportar-a-csv">Exportar a CSV</a></li>
+<li class="toctree-l4"><a class="reference internal" href="faas.html#verificar-estado">Verificar Estado</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="faas.html#uso">Uso</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sistema de Encuestas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API REST Endpoints</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-rest-endpoints">
+<h1>API REST Endpoints<a class="headerlink" href="#api-rest-endpoints" title="Link to this heading"></a></h1>
+<section id="survey-service-servicio-de-encuestas">
+<h2>Survey Service (Servicio de Encuestas)<a class="headerlink" href="#survey-service-servicio-de-encuestas" title="Link to this heading"></a></h2>
+<section id="gestion-de-encuestas">
+<h3>Gestión de Encuestas<a class="headerlink" href="#gestion-de-encuestas" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Método</p></th>
+<th class="head"><p>Endpoint</p></th>
+<th class="head"><p>Descripción</p></th>
+<th class="head"><p>Status</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GET</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/surveys/</span></code></p></td>
+<td><p>Obtener todas las encuestas</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>POST</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/surveys/</span></code></p></td>
+<td><p>Crear nueva encuesta</p></td>
+<td><p>201</p></td>
+</tr>
+<tr class="row-even"><td><p>GET</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/surveys/{id}/</span></code></p></td>
+<td><p>Obtener encuesta por ID</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>PUT</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/surveys/{id}/</span></code></p></td>
+<td><p>Actualizar encuesta completa</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>DELETE</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/surveys/{id}/</span></code></p></td>
+<td><p>Eliminar encuesta</p></td>
+<td><p>204</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ejemplo de Request POST</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Encuesta de Satisfacción&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Encuesta para evaluar la satisfacción del cliente&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Ejemplo de Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Encuesta de Satisfacción&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Encuesta para evaluar la satisfacción del cliente&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-07-29T01:54:20.517969Z&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="gestion-de-preguntas">
+<h3>Gestión de Preguntas<a class="headerlink" href="#gestion-de-preguntas" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Método</p></th>
+<th class="head"><p>Endpoint</p></th>
+<th class="head"><p>Descripción</p></th>
+<th class="head"><p>Status</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GET</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/questions/</span></code></p></td>
+<td><p>Obtener todas las preguntas</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>POST</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/questions/</span></code></p></td>
+<td><p>Crear nueva pregunta</p></td>
+<td><p>201</p></td>
+</tr>
+<tr class="row-even"><td><p>GET</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/questions/{id}/</span></code></p></td>
+<td><p>Obtener pregunta por ID</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>PUT</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/questions/{id}/</span></code></p></td>
+<td><p>Actualizar pregunta completa</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>DELETE</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/questions/{id}/</span></code></p></td>
+<td><p>Eliminar pregunta</p></td>
+<td><p>204</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ejemplo de Request POST</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;¿Cómo calificarías nuestro servicio?&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;question_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cerrada&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;survey&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="gestion-de-opciones">
+<h3>Gestión de Opciones<a class="headerlink" href="#gestion-de-opciones" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Método</p></th>
+<th class="head"><p>Endpoint</p></th>
+<th class="head"><p>Descripción</p></th>
+<th class="head"><p>Status</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GET</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/options/</span></code></p></td>
+<td><p>Obtener todas las opciones</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>POST</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/options/</span></code></p></td>
+<td><p>Crear nueva opción</p></td>
+<td><p>201</p></td>
+</tr>
+<tr class="row-even"><td><p>GET</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/options/{id}/</span></code></p></td>
+<td><p>Obtener opción por ID</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>PUT</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/options/{id}/</span></code></p></td>
+<td><p>Actualizar opción completa</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>DELETE</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/options/{id}/</span></code></p></td>
+<td><p>Eliminar opción</p></td>
+<td><p>204</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ejemplo de Request POST</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Excelente&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="answer-service-servicio-de-respuestas">
+<h2>Answer Service (Servicio de Respuestas)<a class="headerlink" href="#answer-service-servicio-de-respuestas" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Método</p></th>
+<th class="head"><p>Endpoint</p></th>
+<th class="head"><p>Descripción</p></th>
+<th class="head"><p>Status</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>POST</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/api/answers/</span></code></p></td>
+<td><p>Crear nueva respuesta</p></td>
+<td><p>201</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ejemplo para pregunta cerrada</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id_question&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;id_option&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;answer&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Ejemplo para pregunta abierta</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id_question&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;id_option&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;answer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;El servicio fue excelente, muy satisfecho&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="report-service-servicio-de-reportes">
+<h2>Report Service (Servicio de Reportes)<a class="headerlink" href="#report-service-servicio-de-reportes" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Método</p></th>
+<th class="head"><p>Endpoint</p></th>
+<th class="head"><p>Descripción</p></th>
+<th class="head"><p>Status</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GET</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/reports/{encuesta_id}/</span></code></p></td>
+<td><p>Obtener reporte de respuestas</p></td>
+<td><p>200</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ejemplo de Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;encuesta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;nombre_encuesta&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Encuesta de Satisfacción&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;pregunta&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;¿Cómo calificarías nuestro servicio?&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opciones&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Excelente&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bueno&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Regular&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;respuestas&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Excelente&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Bueno&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Excelente&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="arquitectura.html" class="btn btn-neutral float-left" title="Arquitectura del Sistema" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="faas.html" class="btn btn-neutral float-right" title="Function as a Service (FaaS)" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Equipo Desarrollo.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
