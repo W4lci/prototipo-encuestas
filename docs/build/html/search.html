@@ -3,14 +3,14 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="es" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instalación y Configuración &mdash; documentación de Sistema de Encuestas - 1.0</title>
+  <title>Búsqueda &mdash; documentación de Sistema de Encuestas - 1.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
+    
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=4936afed"></script>
@@ -18,10 +18,10 @@
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/translations.js?v=f85f4cfb"></script>
     <script src="_static/js/theme.js"></script>
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
-    <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="Arquitectura del Sistema" href="arquitectura.html" />
-    <link rel="prev" title="Sistema de Encuestas" href="index.html" /> 
+    <link rel="search" title="Búsqueda" href="#" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -36,7 +36,7 @@
             Sistema de Encuestas
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="#" method="get">
     <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -44,16 +44,16 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Instalación y Configuración</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#requisitos-basicos">Requisitos Básicos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#instalacion">Instalación</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#clonar-el-repositorio">1. Clonar el Repositorio</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#despliegue-automatico">2. Despliegue Automático</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#despliegue-local">3. Despliegue Local</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="instalacion.html">Instalación y Configuración</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="instalacion.html#requisitos-basicos">Requisitos Básicos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="instalacion.html#instalacion">Instalación</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="instalacion.html#clonar-el-repositorio">1. Clonar el Repositorio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="instalacion.html#despliegue-automatico">2. Despliegue Automático</a></li>
+<li class="toctree-l3"><a class="reference internal" href="instalacion.html#despliegue-local">3. Despliegue Local</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#verificacion">Verificación</a></li>
+<li class="toctree-l2"><a class="reference internal" href="instalacion.html#verificacion">Verificación</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="arquitectura.html">Arquitectura del Sistema</a><ul>
@@ -95,6 +95,19 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="base_datos.html">Modelo de Datos Relacional vs. NoSQL y por qué se eligió MySQL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="base_datos.html#comparacion-entre-modelo-relacional-y-nosql">Comparación entre Modelo Relacional y NoSQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="base_datos.html#justificacion-de-eleccion-por-que-se-eligio-mysql">Justificación de Elección: ¿Por qué se eligió MySQL?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="base_datos.html#relaciones-bien-establecidas">Relaciones bien establecidas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_datos.html#mantenimiento-de-la-integridad-de-los-datos">Mantenimiento de la integridad de los datos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_datos.html#compatibilidad-con-django">Compatibilidad con Django</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_datos.html#experiencia-y-sencillez">Experiencia y sencillez</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base_datos.html#capacidad-suficiente-de-escalabilidad-del-sistema">Capacidad suficiente de escalabilidad del sistema</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="base_datos.html#conclusion-tecnica">Conclusión Técnica</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -111,9 +124,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Instalación y Configuración</li>
+      <li class="breadcrumb-item active">Búsqueda</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/instalacion.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
       </li>
   </ul>
   <hr/>
@@ -121,63 +133,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="instalacion-y-configuracion">
-<h1>Instalación y Configuración<a class="headerlink" href="#instalacion-y-configuracion" title="Link to this heading"></a></h1>
-<section id="requisitos-basicos">
-<h2>Requisitos Básicos<a class="headerlink" href="#requisitos-basicos" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p><strong>Linux</strong> (Ubuntu/Debian recomendado)</p></li>
-<li><p><strong>Ansible</strong> instalado</p></li>
-<li><p><strong>Git</strong></p></li>
-<li><p><strong>Docker</strong> y <strong>Docker Compose</strong> (para despliegue local)</p></li>
-</ul>
-</section>
-<section id="instalacion">
-<h2>Instalación<a class="headerlink" href="#instalacion" title="Link to this heading"></a></h2>
-<section id="clonar-el-repositorio">
-<h3>1. Clonar el Repositorio<a class="headerlink" href="#clonar-el-repositorio" title="Link to this heading"></a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/W4lci/prototipo-encuestas.git
-</pre></div>
-</div>
-</section>
-<section id="despliegue-automatico">
-<h3>2. Despliegue Automático<a class="headerlink" href="#despliegue-automatico" title="Link to this heading"></a></h3>
-<p><strong>Con Ansible (Recomendado para producción):</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ansible-playbook<span class="w"> </span>one_deploy.yaml
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Nota</p>
-<p>Se necesita Linux obligatoriamente para el despliegue con Ansible.</p>
-</div>
-</section>
-<section id="despliegue-local">
-<h3>3. Despliegue Local<a class="headerlink" href="#despliegue-local" title="Link to this heading"></a></h3>
-<p><strong>Con Docker Compose:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
-</pre></div>
-</div>
-</section>
-</section>
-<section id="verificacion">
-<h2>Verificación<a class="headerlink" href="#verificacion" title="Link to this heading"></a></h2>
-<p>Una vez desplegado, el sistema estará disponible en los siguientes puertos:</p>
-<ul class="simple">
-<li><p><strong>Survey Service</strong>: Puerto 8001</p></li>
-<li><p><strong>Answer Service</strong>: Puerto 8002</p></li>
-<li><p><strong>Report Service</strong>: Puerto 8003</p></li>
-<li><p><strong>ExportCSV Function</strong>: Puerto 8004</p></li>
-</ul>
-</section>
-</section>
+  <noscript>
+  <div id="fallback" class="admonition warning">
+    <p class="last">
+      Por favor, active JavaScript para habilitar la funcionalidad de búsqueda.
+    </p>
+  </div>
+  </noscript>
 
+  
+  <div id="search-results">
+  
+  </div>
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
-        <a href="index.html" class="btn btn-neutral float-left" title="Sistema de Encuestas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="arquitectura.html" class="btn btn-neutral float-right" title="Arquitectura del Sistema" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 
@@ -199,7 +170,14 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+  <script>
+    jQuery(function() { Search.loadIndex("searchindex.js"); });
+  </script>
+  
+  <script id="searchindexloader"></script>
+   
+
 
 </body>
 </html>

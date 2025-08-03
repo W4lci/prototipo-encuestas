@@ -19,4 +19,5 @@ Sistema desarrollado con Django REST Framework que implementa una arquitectura d
    arquitectura
    api
    faas
+   base_datos
 

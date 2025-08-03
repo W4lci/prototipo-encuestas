@@ -1,0 +1,3120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.13.5 on win32)" generated="2025-08-02T22:28:14.405657" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="C:\Users\willi\Desktop\Universidad\Octavo\Computación en la nube\Fin Ciclo\Aplicacion\Encuestas2\tests\tests.robot">
+<test id="s1-t1" name="Test Endpoint /Surveys/" line="42">
+<for flavor="IN RANGE">
+<iter>
+<try>
+<branch type="TRY">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.024690" level="INFO">Intento 1 de 3 - Test Surveys</msg>
+<arg>Intento ${intento} de ${MAX_REINTENTOS} - Test Surveys</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.024502" elapsed="0.000241"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.024964" level="INFO">Creating Session using : alias=surveys_session, url=http://localhost:8000/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${URL_SURVEYS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-02T22:28:15.024842" elapsed="0.000271"/>
+</kw>
+<kw name="Obtener Surveys" owner="keywords_api_surveys">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.052593" level="INFO">GET Request : url=http://localhost:8000/api/surveys/ 
+ path_url=/api/surveys/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:15.052739" level="INFO">GET Response : url=http://localhost:8000/api/surveys/ 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:15 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '34', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"message":"aun no hay encuestas"} 
+ </msg>
+<msg time="2025-08-02T22:28:15.052887" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.025461" elapsed="0.027457"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:15.053001" elapsed="0.000063"/>
+</return>
+<msg time="2025-08-02T22:28:15.053228" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<doc>Obtiene todas las encuestas</doc>
+<status status="PASS" start="2025-08-02T22:28:15.025264" elapsed="0.027990"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.054092" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.053671" elapsed="0.000469"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.054588" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.054246" elapsed="0.000378"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:15.053412" elapsed="0.001257"/>
+</kw>
+<kw name="Crear Survey" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.174368" level="INFO">POST Request : url=http://localhost:8000/api/surveys/ 
+ path_url=/api/surveys/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '93', 'Content-Type': 'application/json'} 
+ body=b'{"name": "Encuesta Para TEST", "description": "Descripci\\u00f3n de la encuesta para pruebas"}' 
+ </msg>
+<msg time="2025-08-02T22:28:15.174457" level="INFO">POST Response : url=http://localhost:8000/api/surveys/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:15 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '151', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":1,"questions":[],"name":"Encuesta Para TEST","description":"Descripción de la encuesta para pruebas","created_at":"2025-08-03T03:28:15.108985Z"} 
+ </msg>
+<msg time="2025-08-02T22:28:15.174585" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/</arg>
+<arg>json=${survey_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.055062" elapsed="0.119550"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:15.174679" elapsed="0.000046"/>
+</return>
+<msg time="2025-08-02T22:28:15.174868" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${DATOS_SURVEY}</arg>
+<doc>Crea una nueva encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:15.054797" elapsed="0.120093"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.175734" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.175320" elapsed="0.000460"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.176225" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.175868" elapsed="0.000391"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:15.175042" elapsed="0.001260"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:15.176789" level="INFO">${survey_id} = 1</msg>
+<var>${survey_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.176381" elapsed="0.000428"/>
+</kw>
+<kw name="Obtener Survey Por ID" owner="keywords_api_surveys">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.240864" level="INFO">GET Request : url=http://localhost:8000/api/surveys/1/ 
+ path_url=/api/surveys/1/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:15.240955" level="INFO">GET Response : url=http://localhost:8000/api/surveys/1/ 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:15 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '151', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":1,"questions":[],"name":"Encuesta Para TEST","description":"Descripción de la encuesta para pruebas","created_at":"2025-08-03T03:28:15.108985Z"} 
+ </msg>
+<msg time="2025-08-02T22:28:15.241265" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/${survey_id}/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.177147" elapsed="0.064150"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:15.241380" elapsed="0.000046"/>
+</return>
+<msg time="2025-08-02T22:28:15.241566" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${survey_id}</arg>
+<doc>Obtiene una encuesta específica por ID</doc>
+<status status="PASS" start="2025-08-02T22:28:15.176937" elapsed="0.064654"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.242398" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.242009" elapsed="0.000428"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.242809" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.242509" elapsed="0.000330"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:15.241788" elapsed="0.001088"/>
+</kw>
+<kw name="Actualizar Survey" owner="keywords_api_surveys">
+<kw name="PUT On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.373280" level="INFO">PUT Request : url=http://localhost:8000/api/surveys/1/ 
+ path_url=/api/surveys/1/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '107', 'Content-Type': 'application/json'} 
+ body=b'{"name": "Encuesta Actualizada", "description": "Descripci\\u00f3n actualizada de la encuesta para pruebas"}' 
+ </msg>
+<msg time="2025-08-02T22:28:15.373364" level="INFO">PUT Response : url=http://localhost:8000/api/surveys/1/ 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:15 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '165', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":1,"questions":[],"name":"Encuesta Actualizada","description":"Descripción actualizada de la encuesta para pruebas","created_at":"2025-08-03T03:28:15.108985Z"} 
+ </msg>
+<msg time="2025-08-02T22:28:15.373476" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/${survey_id}/</arg>
+<arg>json=${survey_data}</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.243192" elapsed="0.130303"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:15.373559" elapsed="0.000077"/>
+</return>
+<msg time="2025-08-02T22:28:15.373751" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${survey_id}</arg>
+<arg>${DATOS_SURVEY_UPDATE}</arg>
+<doc>Actualiza una encuesta existente</doc>
+<status status="PASS" start="2025-08-02T22:28:15.242976" elapsed="0.130798"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.374579" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.374151" elapsed="0.000469"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.374995" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.374694" elapsed="0.000334"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:15.373924" elapsed="0.001142"/>
+</kw>
+<kw name="Eliminar Survey" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.450229" level="INFO">DELETE Request : url=http://localhost:8000/api/surveys/1/ 
+ path_url=/api/surveys/1/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:15.450321" level="INFO">DELETE Response : url=http://localhost:8000/api/surveys/1/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:15 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:15.450459" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/${survey_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.375384" elapsed="0.075104"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:15.450565" elapsed="0.000041"/>
+</return>
+<msg time="2025-08-02T22:28:15.450714" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${survey_id}</arg>
+<doc>Elimina una encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:15.375185" elapsed="0.075546"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.451499" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.451108" elapsed="0.000430"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.451913" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.451611" elapsed="0.000334"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:15.450877" elapsed="0.001104"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.452123" level="INFO">Test Surveys exitoso en intento 1</msg>
+<arg>Test Surveys exitoso en intento ${intento}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.452048" elapsed="0.000101"/>
+</kw>
+<break>
+<status status="PASS" start="2025-08-02T22:28:15.452185" elapsed="0.000038"/>
+</break>
+<status status="PASS" start="2025-08-02T22:28:15.023952" elapsed="0.428295"/>
+</branch>
+<branch type="EXCEPT" assign="${error}">
+<kw name="Log" owner="BuiltIn">
+<arg>Error en intento ${intento}: ${error}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:15.452351" elapsed="0.000099"/>
+</kw>
+<if>
+<branch type="IF" condition="${intento} == ${MAX_REINTENTOS}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Test Surveys falló después de ${MAX_REINTENTOS} intentos. Último error: ${error}</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:15.452601" elapsed="0.000012"/>
+</kw>
+<status status="NOT RUN" start="2025-08-02T22:28:15.452526" elapsed="0.000109"/>
+</branch>
+<status status="NOT RUN" start="2025-08-02T22:28:15.452505" elapsed="0.000149"/>
+</if>
+<kw name="Sleep" owner="BuiltIn">
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:15.452704" elapsed="0.000017"/>
+</kw>
+<status status="NOT RUN" start="2025-08-02T22:28:15.452292" elapsed="0.000448"/>
+</branch>
+<status status="PASS" start="2025-08-02T22:28:15.023921" elapsed="0.428847"/>
+</try>
+<var name="${intento}">1</var>
+<status status="PASS" start="2025-08-02T22:28:15.023884" elapsed="0.428908"/>
+</iter>
+<var>${intento}</var>
+<value>1</value>
+<value>${MAX_REINTENTOS + 1}</value>
+<status status="PASS" start="2025-08-02T22:28:15.023245" elapsed="0.429580"/>
+</for>
+<doc>Verificar todas las operaciones CRUD en el endpoint /surveys/</doc>
+<status status="PASS" start="2025-08-02T22:28:15.022915" elapsed="0.430128"/>
+</test>
+<test id="s1-t2" name="Test Endpoint /Questions/" line="82">
+<for flavor="IN RANGE">
+<iter>
+<try>
+<branch type="TRY">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.454619" level="INFO">Intento 1 de 3 - Test Questions</msg>
+<arg>Intento ${intento} de ${MAX_REINTENTOS} - Test Questions</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.454483" elapsed="0.000175"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.454829" level="INFO">Creating Session using : alias=surveys_session, url=http://localhost:8000/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${URL_SURVEYS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-02T22:28:15.454728" elapsed="0.000229"/>
+</kw>
+<kw name="Crear Survey" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.488177" level="INFO">POST Request : url=http://localhost:8000/api/surveys/ 
+ path_url=/api/surveys/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '93', 'Content-Type': 'application/json'} 
+ body=b'{"name": "Encuesta Para TEST", "description": "Descripci\\u00f3n de la encuesta para pruebas"}' 
+ </msg>
+<msg time="2025-08-02T22:28:15.488268" level="INFO">POST Response : url=http://localhost:8000/api/surveys/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:15 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '151', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":2,"questions":[],"name":"Encuesta Para TEST","description":"Descripción de la encuesta para pruebas","created_at":"2025-08-03T03:28:15.467737Z"} 
+ </msg>
+<msg time="2025-08-02T22:28:15.488383" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/</arg>
+<arg>json=${survey_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.455298" elapsed="0.033104"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:15.488466" elapsed="0.000044"/>
+</return>
+<msg time="2025-08-02T22:28:15.488618" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${DATOS_SURVEY}</arg>
+<doc>Crea una nueva encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:15.455083" elapsed="0.033553"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.489444" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.489045" elapsed="0.000452"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.489891" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.489576" elapsed="0.000345"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:15.488801" elapsed="0.001158"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:15.490396" level="INFO">${survey_id} = 2</msg>
+<var>${survey_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.490029" elapsed="0.000386"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:15.490923" level="INFO">${question_data} = {'text': '¿Te gusta programar?', 'question_type': 'Cerrada'}</msg>
+<var>${question_data}</var>
+<arg>${DATOS_QUESTION}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.490484" elapsed="0.000465"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${question_data}</arg>
+<arg>survey=${survey_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.491027" elapsed="0.000128"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:15.491339" level="INFO">${question_update_data} = {'text': '¿Te gusta mucho programar?', 'question_type': 'Cerrada'}</msg>
+<var>${question_update_data}</var>
+<arg>${DATOS_QUESTION_UPDATE}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.491223" elapsed="0.000134"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${question_update_data}</arg>
+<arg>survey=${survey_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.491423" elapsed="0.000115"/>
+</kw>
+<kw name="Obtener Questions" owner="keywords_api_surveys">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.551217" level="INFO">GET Request : url=http://localhost:8000/api/questions/ 
+ path_url=/api/questions/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:15.551297" level="INFO">GET Response : url=http://localhost:8000/api/questions/ 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:15 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '2', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=[] 
+ </msg>
+<msg time="2025-08-02T22:28:15.551489" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.491843" elapsed="0.059672"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:15.551577" elapsed="0.000042"/>
+</return>
+<msg time="2025-08-02T22:28:15.551740" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<doc>Obtiene todas las preguntas</doc>
+<status status="PASS" start="2025-08-02T22:28:15.491664" elapsed="0.060098"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.552614" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.552204" elapsed="0.000453"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.553107" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.552746" elapsed="0.000398"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:15.551947" elapsed="0.001241"/>
+</kw>
+<kw name="Crear Question" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.674135" level="INFO">POST Request : url=http://localhost:8000/api/questions/ 
+ path_url=/api/questions/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '78', 'Content-Type': 'application/json'} 
+ body=b'{"text": "\\u00bfTe gusta programar?", "question_type": "Cerrada", "survey": 2}' 
+ </msg>
+<msg time="2025-08-02T22:28:15.674210" level="INFO">POST Response : url=http://localhost:8000/api/questions/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:15 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '132', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":1,"options":[],"text":"¿Te gusta programar?","question_type":"Cerrada","created_at":"2025-08-03T03:28:15.610186Z","survey":2} 
+ </msg>
+<msg time="2025-08-02T22:28:15.674321" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/</arg>
+<arg>json=${question_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.553557" elapsed="0.120786"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:15.674439" elapsed="0.000039"/>
+</return>
+<msg time="2025-08-02T22:28:15.674586" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${question_data}</arg>
+<doc>Crea una nueva pregunta</doc>
+<status status="PASS" start="2025-08-02T22:28:15.553318" elapsed="0.121285"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.675389" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.674976" elapsed="0.000464"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.675831" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.675518" elapsed="0.000347"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:15.674749" elapsed="0.001154"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:15.676344" level="INFO">${question_id} = 1</msg>
+<var>${question_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.675971" elapsed="0.000391"/>
+</kw>
+<kw name="Obtener Question Por ID" owner="keywords_api_surveys">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.741230" level="INFO">GET Request : url=http://localhost:8000/api/questions/1/ 
+ path_url=/api/questions/1/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:15.741325" level="INFO">GET Response : url=http://localhost:8000/api/questions/1/ 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:15 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '132', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":1,"options":[],"text":"¿Te gusta programar?","question_type":"Cerrada","created_at":"2025-08-03T03:28:15.610186Z","survey":2} 
+ </msg>
+<msg time="2025-08-02T22:28:15.741467" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/${question_id}/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.676657" elapsed="0.064839"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:15.741571" elapsed="0.000049"/>
+</return>
+<msg time="2025-08-02T22:28:15.741814" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${question_id}</arg>
+<doc>Obtiene una pregunta específica por ID</doc>
+<status status="PASS" start="2025-08-02T22:28:15.676470" elapsed="0.065370"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.743217" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.742828" elapsed="0.000433"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.743679" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.743352" elapsed="0.000359"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:15.742570" elapsed="0.001183"/>
+</kw>
+<kw name="Actualizar Question" owner="keywords_api_surveys">
+<kw name="PUT On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.863687" level="INFO">PUT Request : url=http://localhost:8000/api/questions/1/ 
+ path_url=/api/questions/1/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '84', 'Content-Type': 'application/json'} 
+ body=b'{"text": "\\u00bfTe gusta mucho programar?", "question_type": "Cerrada", "survey": 2}' 
+ </msg>
+<msg time="2025-08-02T22:28:15.863919" level="INFO">PUT Response : url=http://localhost:8000/api/questions/1/ 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:15 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '138', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":1,"options":[],"text":"¿Te gusta mucho programar?","question_type":"Cerrada","created_at":"2025-08-03T03:28:15.610186Z","survey":2} 
+ </msg>
+<msg time="2025-08-02T22:28:15.864075" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/${question_id}/</arg>
+<arg>json=${question_data}</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.744105" elapsed="0.120001"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:15.864187" elapsed="0.000046"/>
+</return>
+<msg time="2025-08-02T22:28:15.864380" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${question_id}</arg>
+<arg>${question_update_data}</arg>
+<doc>Actualiza una pregunta existente</doc>
+<status status="PASS" start="2025-08-02T22:28:15.743872" elapsed="0.120534"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.865222" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.864821" elapsed="0.000442"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.865653" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.865342" elapsed="0.000342"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:15.864583" elapsed="0.001140"/>
+</kw>
+<kw name="Eliminar Question" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:15.949788" level="INFO">DELETE Request : url=http://localhost:8000/api/questions/1/ 
+ path_url=/api/questions/1/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:15.949878" level="INFO">DELETE Response : url=http://localhost:8000/api/questions/1/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:15 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:15.950055" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/${question_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.866041" elapsed="0.084041"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:15.950161" elapsed="0.000049"/>
+</return>
+<msg time="2025-08-02T22:28:15.950357" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${question_id}</arg>
+<doc>Elimina una pregunta</doc>
+<status status="PASS" start="2025-08-02T22:28:15.865842" elapsed="0.084539"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.951270" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.950853" elapsed="0.000455"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:15.951680" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.951378" elapsed="0.000332"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:15.950556" elapsed="0.001191"/>
+</kw>
+<kw name="Eliminar Survey" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.019955" level="INFO">DELETE Request : url=http://localhost:8000/api/surveys/2/ 
+ path_url=/api/surveys/2/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:16.020065" level="INFO">DELETE Response : url=http://localhost:8000/api/surveys/2/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:15 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:16.020183" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/${survey_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:15.952029" elapsed="0.068176"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:16.020271" elapsed="0.000046"/>
+</return>
+<msg time="2025-08-02T22:28:16.020442" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${survey_id}</arg>
+<doc>Elimina una encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:15.951847" elapsed="0.068614"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.021302" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.020878" elapsed="0.000466"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.021767" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.021433" elapsed="0.000367"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:16.020623" elapsed="0.001219"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.021997" level="INFO">Test Questions exitoso en intento 1</msg>
+<arg>Test Questions exitoso en intento ${intento}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.021915" elapsed="0.000109"/>
+</kw>
+<break>
+<status status="PASS" start="2025-08-02T22:28:16.022117" elapsed="0.000038"/>
+</break>
+<status status="PASS" start="2025-08-02T22:28:15.454402" elapsed="0.567779"/>
+</branch>
+<branch type="EXCEPT" assign="${error}">
+<kw name="Log" owner="BuiltIn">
+<arg>Error en intento ${intento}: ${error}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:16.022287" elapsed="0.000012"/>
+</kw>
+<if>
+<branch type="IF" condition="${intento} == ${MAX_REINTENTOS}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Test Questions falló después de ${MAX_REINTENTOS} intentos. Último error: ${error}</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:16.022427" elapsed="0.000012"/>
+</kw>
+<status status="NOT RUN" start="2025-08-02T22:28:16.022359" elapsed="0.000102"/>
+</branch>
+<status status="NOT RUN" start="2025-08-02T22:28:16.022342" elapsed="0.000137"/>
+</if>
+<kw name="Sleep" owner="BuiltIn">
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:16.022530" elapsed="0.000011"/>
+</kw>
+<status status="NOT RUN" start="2025-08-02T22:28:16.022223" elapsed="0.000337"/>
+</branch>
+<status status="PASS" start="2025-08-02T22:28:15.454377" elapsed="0.568208"/>
+</try>
+<var name="${intento}">1</var>
+<status status="PASS" start="2025-08-02T22:28:15.454347" elapsed="0.568262"/>
+</iter>
+<var>${intento}</var>
+<value>1</value>
+<value>${MAX_REINTENTOS + 1}</value>
+<status status="PASS" start="2025-08-02T22:28:15.453730" elapsed="0.568908"/>
+</for>
+<doc>Verificar todas las operaciones CRUD en el endpoint /questions/</doc>
+<status status="PASS" start="2025-08-02T22:28:15.453443" elapsed="0.569421"/>
+</test>
+<test id="s1-t3" name="Test Endpoint /Options/" line="137">
+<for flavor="IN RANGE">
+<iter>
+<try>
+<branch type="TRY">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.024350" level="INFO">Intento 1 de 3 - Test Options</msg>
+<arg>Intento ${intento} de ${MAX_REINTENTOS} - Test Options</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.024245" elapsed="0.000142"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.024678" level="INFO">Creating Session using : alias=surveys_session, url=http://localhost:8000/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${URL_SURVEYS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-02T22:28:16.024454" elapsed="0.000368"/>
+</kw>
+<kw name="Crear Survey" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.055341" level="INFO">POST Request : url=http://localhost:8000/api/surveys/ 
+ path_url=/api/surveys/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '93', 'Content-Type': 'application/json'} 
+ body=b'{"name": "Encuesta Para TEST", "description": "Descripci\\u00f3n de la encuesta para pruebas"}' 
+ </msg>
+<msg time="2025-08-02T22:28:16.055460" level="INFO">POST Response : url=http://localhost:8000/api/surveys/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:16 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '151', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":3,"questions":[],"name":"Encuesta Para TEST","description":"Descripción de la encuesta para pruebas","created_at":"2025-08-03T03:28:16.037227Z"} 
+ </msg>
+<msg time="2025-08-02T22:28:16.055628" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/</arg>
+<arg>json=${survey_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.025186" elapsed="0.030475"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:16.055750" elapsed="0.000058"/>
+</return>
+<msg time="2025-08-02T22:28:16.055974" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${DATOS_SURVEY}</arg>
+<doc>Crea una nueva encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:16.024961" elapsed="0.031040"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.057171" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.056558" elapsed="0.000673"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.057833" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.057346" elapsed="0.000533"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:16.056205" elapsed="0.001734"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:16.058624" level="INFO">${survey_id} = 3</msg>
+<var>${survey_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.058043" elapsed="0.000609"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:16.058931" level="INFO">${question_data} = {'text': '¿Te gusta programar?', 'question_type': 'Cerrada'}</msg>
+<var>${question_data}</var>
+<arg>${DATOS_QUESTION}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.058758" elapsed="0.000201"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${question_data}</arg>
+<arg>survey=${survey_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.059037" elapsed="0.000114"/>
+</kw>
+<kw name="Crear Question" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.172794" level="INFO">POST Request : url=http://localhost:8000/api/questions/ 
+ path_url=/api/questions/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '78', 'Content-Type': 'application/json'} 
+ body=b'{"text": "\\u00bfTe gusta programar?", "question_type": "Cerrada", "survey": 3}' 
+ </msg>
+<msg time="2025-08-02T22:28:16.172892" level="INFO">POST Response : url=http://localhost:8000/api/questions/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:16 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '132', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":2,"options":[],"text":"¿Te gusta programar?","question_type":"Cerrada","created_at":"2025-08-03T03:28:16.109669Z","survey":3} 
+ </msg>
+<msg time="2025-08-02T22:28:16.173033" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/</arg>
+<arg>json=${question_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.059449" elapsed="0.113735"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:16.173282" elapsed="0.000048"/>
+</return>
+<msg time="2025-08-02T22:28:16.173493" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${question_data}</arg>
+<doc>Crea una nueva pregunta</doc>
+<status status="PASS" start="2025-08-02T22:28:16.059263" elapsed="0.114258"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.174473" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.174046" elapsed="0.000468"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.174906" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.174595" elapsed="0.000357"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:16.173720" elapsed="0.001275"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:16.175458" level="INFO">${question_id} = 2</msg>
+<var>${question_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.175077" elapsed="0.000399"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:16.175664" level="INFO">${option_data} = {'text': 'Si'}</msg>
+<var>${option_data}</var>
+<arg>${DATOS_OPTION_SI}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.175550" elapsed="0.000133"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${option_data}</arg>
+<arg>question=${question_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.175747" elapsed="0.000106"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:16.176017" level="INFO">${option_update_data} = {'text': 'Muchísimo'}</msg>
+<var>${option_update_data}</var>
+<arg>${DATOS_OPTION_UPDATE}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.175916" elapsed="0.000118"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${option_update_data}</arg>
+<arg>question=${question_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.176094" elapsed="0.000114"/>
+</kw>
+<kw name="Obtener Options" owner="keywords_api_surveys">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.240950" level="INFO">GET Request : url=http://localhost:8000/api/options/ 
+ path_url=/api/options/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:16.241045" level="INFO">GET Response : url=http://localhost:8000/api/options/ 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:16 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '2', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=[] 
+ </msg>
+<msg time="2025-08-02T22:28:16.241178" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/options/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.176482" elapsed="0.064724"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:16.241281" elapsed="0.000047"/>
+</return>
+<msg time="2025-08-02T22:28:16.241450" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<doc>Obtiene todas las opciones</doc>
+<status status="PASS" start="2025-08-02T22:28:16.176321" elapsed="0.065146"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.242303" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.241906" elapsed="0.000438"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.242776" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.242435" elapsed="0.000374"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:16.241634" elapsed="0.001215"/>
+</kw>
+<kw name="Crear Option" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.372946" level="INFO">POST Request : url=http://localhost:8000/api/options/ 
+ path_url=/api/options/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '29', 'Content-Type': 'application/json'} 
+ body=b'{"text": "Si", "question": 2}' 
+ </msg>
+<msg time="2025-08-02T22:28:16.373042" level="INFO">POST Response : url=http://localhost:8000/api/options/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:16 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '76', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":1,"text":"Si","created_at":"2025-08-03T03:28:16.300464Z","question":2} 
+ </msg>
+<msg time="2025-08-02T22:28:16.373173" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/options/</arg>
+<arg>json=${option_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.243194" elapsed="0.130016"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:16.373287" elapsed="0.000044"/>
+</return>
+<msg time="2025-08-02T22:28:16.373448" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${option_data}</arg>
+<doc>Crea una nueva opción</doc>
+<status status="PASS" start="2025-08-02T22:28:16.242964" elapsed="0.130503"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.374312" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.373887" elapsed="0.000476"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.374926" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.374565" elapsed="0.000399"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:16.373646" elapsed="0.001363"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:16.375504" level="INFO">${option_id} = 1</msg>
+<var>${option_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.375098" elapsed="0.000423"/>
+</kw>
+<kw name="Obtener Option Por ID" owner="keywords_api_surveys">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.431431" level="INFO">GET Request : url=http://localhost:8000/api/options/1/ 
+ path_url=/api/options/1/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:16.431504" level="INFO">GET Response : url=http://localhost:8000/api/options/1/ 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:16 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '76', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":1,"text":"Si","created_at":"2025-08-03T03:28:16.300464Z","question":2} 
+ </msg>
+<msg time="2025-08-02T22:28:16.431604" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/options/${option_id}/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.375853" elapsed="0.055770"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:16.431678" elapsed="0.000038"/>
+</return>
+<msg time="2025-08-02T22:28:16.431824" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${option_id}</arg>
+<doc>Obtiene una opción específica por ID</doc>
+<status status="PASS" start="2025-08-02T22:28:16.375641" elapsed="0.056200"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.432582" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.432197" elapsed="0.000426"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.433010" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.432698" elapsed="0.000343"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:16.431978" elapsed="0.001100"/>
+</kw>
+<kw name="Actualizar Option" owner="keywords_api_surveys">
+<kw name="PUT On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.573629" level="INFO">PUT Request : url=http://localhost:8000/api/options/1/ 
+ path_url=/api/options/1/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '41', 'Content-Type': 'application/json'} 
+ body=b'{"text": "Much\\u00edsimo", "question": 2}' 
+ </msg>
+<msg time="2025-08-02T22:28:16.573720" level="INFO">PUT Response : url=http://localhost:8000/api/options/1/ 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:16 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '84', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":1,"text":"Muchísimo","created_at":"2025-08-03T03:28:16.300464Z","question":2} 
+ </msg>
+<msg time="2025-08-02T22:28:16.573856" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/options/${option_id}/</arg>
+<arg>json=${option_data}</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.433403" elapsed="0.140484"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:16.573968" elapsed="0.000049"/>
+</return>
+<msg time="2025-08-02T22:28:16.574179" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${option_id}</arg>
+<arg>${option_update_data}</arg>
+<doc>Actualiza una opción existente</doc>
+<status status="PASS" start="2025-08-02T22:28:16.433186" elapsed="0.141019"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.575273" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.574720" elapsed="0.000596"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.575809" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.575470" elapsed="0.000373"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:16.574401" elapsed="0.001484"/>
+</kw>
+<kw name="Eliminar Option" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.639919" level="INFO">DELETE Request : url=http://localhost:8000/api/options/1/ 
+ path_url=/api/options/1/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:16.640006" level="INFO">DELETE Response : url=http://localhost:8000/api/options/1/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:16 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:16.640134" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/options/${option_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.576221" elapsed="0.063941"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:16.640236" elapsed="0.000045"/>
+</return>
+<msg time="2025-08-02T22:28:16.640493" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${option_id}</arg>
+<doc>Elimina una opción</doc>
+<status status="PASS" start="2025-08-02T22:28:16.576006" elapsed="0.064512"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.641481" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.641077" elapsed="0.000440"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.641880" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.641587" elapsed="0.000321"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:16.640752" elapsed="0.001193"/>
+</kw>
+<kw name="Eliminar Question" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.720354" level="INFO">DELETE Request : url=http://localhost:8000/api/questions/2/ 
+ path_url=/api/questions/2/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:16.720440" level="INFO">DELETE Response : url=http://localhost:8000/api/questions/2/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:16 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:16.720568" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/${question_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.642232" elapsed="0.078364"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:16.720671" elapsed="0.000045"/>
+</return>
+<msg time="2025-08-02T22:28:16.720878" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${question_id}</arg>
+<doc>Elimina una pregunta</doc>
+<status status="PASS" start="2025-08-02T22:28:16.642047" elapsed="0.078856"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.721775" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.721374" elapsed="0.000439"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.722178" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.721886" elapsed="0.000321"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:16.721079" elapsed="0.001165"/>
+</kw>
+<kw name="Eliminar Survey" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.789932" level="INFO">DELETE Request : url=http://localhost:8000/api/surveys/3/ 
+ path_url=/api/surveys/3/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:16.790013" level="INFO">DELETE Response : url=http://localhost:8000/api/surveys/3/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:16 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:16.790138" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/${survey_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.722552" elapsed="0.067612"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:16.790270" elapsed="0.000050"/>
+</return>
+<msg time="2025-08-02T22:28:16.790456" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${survey_id}</arg>
+<doc>Elimina una encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:16.722364" elapsed="0.068115"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.791320" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.790929" elapsed="0.000431"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.791722" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.791432" elapsed="0.000320"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:16.790648" elapsed="0.001140"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.791919" level="INFO">Test Options exitoso en intento 1</msg>
+<arg>Test Options exitoso en intento ${intento}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.791848" elapsed="0.000100"/>
+</kw>
+<break>
+<status status="PASS" start="2025-08-02T22:28:16.791981" elapsed="0.000026"/>
+</break>
+<status status="PASS" start="2025-08-02T22:28:16.024181" elapsed="0.767847"/>
+</branch>
+<branch type="EXCEPT" assign="${error}">
+<kw name="Log" owner="BuiltIn">
+<arg>Error en intento ${intento}: ${error}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:16.792117" elapsed="0.000012"/>
+</kw>
+<if>
+<branch type="IF" condition="${intento} == ${MAX_REINTENTOS}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Test Options falló después de ${MAX_REINTENTOS} intentos. Último error: ${error}</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:16.792237" elapsed="0.000011"/>
+</kw>
+<status status="NOT RUN" start="2025-08-02T22:28:16.792179" elapsed="0.000090"/>
+</branch>
+<status status="NOT RUN" start="2025-08-02T22:28:16.792166" elapsed="0.000119"/>
+</if>
+<kw name="Sleep" owner="BuiltIn">
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:16.792331" elapsed="0.000070"/>
+</kw>
+<status status="NOT RUN" start="2025-08-02T22:28:16.792063" elapsed="0.000361"/>
+</branch>
+<status status="PASS" start="2025-08-02T22:28:16.024158" elapsed="0.768288"/>
+</try>
+<var name="${intento}">1</var>
+<status status="PASS" start="2025-08-02T22:28:16.024133" elapsed="0.768335"/>
+</iter>
+<var>${intento}</var>
+<value>1</value>
+<value>${MAX_REINTENTOS + 1}</value>
+<status status="PASS" start="2025-08-02T22:28:16.023541" elapsed="0.768950"/>
+</for>
+<doc>Verificar todas las operaciones CRUD en el endpoint /options/</doc>
+<status status="PASS" start="2025-08-02T22:28:16.023279" elapsed="0.769436"/>
+</test>
+<test id="s1-t4" name="Test Endpoint /Answers/" line="200">
+<for flavor="IN RANGE">
+<iter>
+<try>
+<branch type="TRY">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.794246" level="INFO">Intento 1 de 3 - Test Answers</msg>
+<arg>Intento ${intento} de ${MAX_REINTENTOS} - Test Answers</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.794130" elapsed="0.000168"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.794478" level="INFO">Creating Session using : alias=surveys_session, url=http://localhost:8000/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${URL_SURVEYS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-02T22:28:16.794381" elapsed="0.000196"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.794744" level="INFO">Creating Session using : alias=answers_session, url=http://localhost:8001/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>${SESION_ANSWERS}</arg>
+<arg>${URL_ANSWERS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-02T22:28:16.794640" elapsed="0.000175"/>
+</kw>
+<kw name="Crear Survey" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.829532" level="INFO">POST Request : url=http://localhost:8000/api/surveys/ 
+ path_url=/api/surveys/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '93', 'Content-Type': 'application/json'} 
+ body=b'{"name": "Encuesta Para TEST", "description": "Descripci\\u00f3n de la encuesta para pruebas"}' 
+ </msg>
+<msg time="2025-08-02T22:28:16.829606" level="INFO">POST Response : url=http://localhost:8000/api/surveys/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:16 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '151', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":4,"questions":[],"name":"Encuesta Para TEST","description":"Descripción de la encuesta para pruebas","created_at":"2025-08-03T03:28:16.807703Z"} 
+ </msg>
+<msg time="2025-08-02T22:28:16.829722" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/</arg>
+<arg>json=${survey_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.795118" elapsed="0.034626"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:16.829807" elapsed="0.000038"/>
+</return>
+<msg time="2025-08-02T22:28:16.829950" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${DATOS_SURVEY}</arg>
+<doc>Crea una nueva encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:16.794922" elapsed="0.035044"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.830695" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.830318" elapsed="0.000413"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.831104" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.830802" elapsed="0.000331"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:16.830101" elapsed="0.001069"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:16.831586" level="INFO">${survey_id} = 4</msg>
+<var>${survey_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.831235" elapsed="0.000368"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:16.831783" level="INFO">${question_data} = {'text': '¿Te gusta programar?', 'question_type': 'Cerrada'}</msg>
+<var>${question_data}</var>
+<arg>${DATOS_QUESTION}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.831669" elapsed="0.000130"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${question_data}</arg>
+<arg>survey=${survey_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.831858" elapsed="0.000124"/>
+</kw>
+<kw name="Crear Question" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:16.963472" level="INFO">POST Request : url=http://localhost:8000/api/questions/ 
+ path_url=/api/questions/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '78', 'Content-Type': 'application/json'} 
+ body=b'{"text": "\\u00bfTe gusta programar?", "question_type": "Cerrada", "survey": 4}' 
+ </msg>
+<msg time="2025-08-02T22:28:16.963551" level="INFO">POST Response : url=http://localhost:8000/api/questions/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:16 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '132', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":3,"options":[],"text":"¿Te gusta programar?","question_type":"Cerrada","created_at":"2025-08-03T03:28:16.899613Z","survey":4} 
+ </msg>
+<msg time="2025-08-02T22:28:16.963664" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/</arg>
+<arg>json=${question_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.832256" elapsed="0.131429"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:16.963748" elapsed="0.000038"/>
+</return>
+<msg time="2025-08-02T22:28:16.963957" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${question_data}</arg>
+<doc>Crea una nueva pregunta</doc>
+<status status="PASS" start="2025-08-02T22:28:16.832079" elapsed="0.131897"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.964876" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.964448" elapsed="0.000471"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:16.965347" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.965009" elapsed="0.000371"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:16.964189" elapsed="0.001233"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:16.965930" level="INFO">${question_id} = 3</msg>
+<var>${question_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.965506" elapsed="0.000443"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:16.966147" level="INFO">${option_data} = {'text': 'Si'}</msg>
+<var>${option_data}</var>
+<arg>${DATOS_OPTION_SI}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.966029" elapsed="0.000134"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${option_data}</arg>
+<arg>question=${question_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.966230" elapsed="0.000110"/>
+</kw>
+<kw name="Crear Option" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.084397" level="INFO">POST Request : url=http://localhost:8000/api/options/ 
+ path_url=/api/options/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '29', 'Content-Type': 'application/json'} 
+ body=b'{"text": "Si", "question": 3}' 
+ </msg>
+<msg time="2025-08-02T22:28:17.084476" level="INFO">POST Response : url=http://localhost:8000/api/options/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '76', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":2,"text":"Si","created_at":"2025-08-03T03:28:17.019424Z","question":3} 
+ </msg>
+<msg time="2025-08-02T22:28:17.084587" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/options/</arg>
+<arg>json=${option_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:16.966653" elapsed="0.117957"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.084675" elapsed="0.000041"/>
+</return>
+<msg time="2025-08-02T22:28:17.084836" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${option_data}</arg>
+<doc>Crea una nueva opción</doc>
+<status status="PASS" start="2025-08-02T22:28:16.966457" elapsed="0.118398"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.085749" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.085338" elapsed="0.000453"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.086203" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.085877" elapsed="0.000359"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.085064" elapsed="0.001211"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:17.086740" level="INFO">${option_id} = 2</msg>
+<var>${option_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.086349" elapsed="0.000411"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:17.086965" level="INFO">${answer_data} = {'id_question': '1', 'id_option': '1', 'answer': None}</msg>
+<var>${answer_data}</var>
+<arg>${DATOS_ANSWER_CERRADA}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.086837" elapsed="0.000145"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${answer_data}</arg>
+<arg>id_question=${question_id}</arg>
+<arg>id_option=${option_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.087051" elapsed="0.000138"/>
+</kw>
+<kw name="Crear Answer" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.112767" level="INFO">POST Request : url=http://localhost:8001/api/answers/ 
+ path_url=/api/answers/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '50', 'Content-Type': 'application/json'} 
+ body=b'{"id_question": 3, "id_option": 2, "answer": null}' 
+ </msg>
+<msg time="2025-08-02T22:28:17.112850" level="INFO">POST Response : url=http://localhost:8001/api/answers/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'POST, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '52', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":1,"id_question":3,"id_option":2,"answer":null} 
+ </msg>
+<msg time="2025-08-02T22:28:17.112963" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/answers/</arg>
+<arg>json=${answer_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.087523" elapsed="0.025464"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.113053" elapsed="0.000041"/>
+</return>
+<msg time="2025-08-02T22:28:17.113232" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_ANSWERS}</arg>
+<arg>${answer_data}</arg>
+<doc>Crea una nueva respuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:17.087316" elapsed="0.025935"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.114080" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.113663" elapsed="0.000460"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.114613" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.114274" elapsed="0.000373"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.113409" elapsed="0.001278"/>
+</kw>
+<kw name="Eliminar Option" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.141999" level="INFO">DELETE Request : url=http://localhost:8000/api/options/2/ 
+ path_url=/api/options/2/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.142071" level="INFO">DELETE Response : url=http://localhost:8000/api/options/2/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.142178" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/options/${option_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.115023" elapsed="0.027176"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.142261" elapsed="0.000038"/>
+</return>
+<msg time="2025-08-02T22:28:17.142412" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${option_id}</arg>
+<doc>Elimina una opción</doc>
+<status status="PASS" start="2025-08-02T22:28:17.114817" elapsed="0.027613"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.143211" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.142817" elapsed="0.000434"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.143673" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.143336" elapsed="0.000369"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.142577" elapsed="0.001171"/>
+</kw>
+<kw name="Eliminar Question" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.219689" level="INFO">DELETE Request : url=http://localhost:8000/api/questions/3/ 
+ path_url=/api/questions/3/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.219762" level="INFO">DELETE Response : url=http://localhost:8000/api/questions/3/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.219881" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/${question_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.144059" elapsed="0.075846"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.219971" elapsed="0.000053"/>
+</return>
+<msg time="2025-08-02T22:28:17.220156" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${question_id}</arg>
+<doc>Elimina una pregunta</doc>
+<status status="PASS" start="2025-08-02T22:28:17.143861" elapsed="0.076314"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.221072" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.220598" elapsed="0.000520"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.221599" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.221217" elapsed="0.000418"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.220336" elapsed="0.001346"/>
+</kw>
+<kw name="Eliminar Survey" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.301150" level="INFO">DELETE Request : url=http://localhost:8000/api/surveys/4/ 
+ path_url=/api/surveys/4/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.301219" level="INFO">DELETE Response : url=http://localhost:8000/api/surveys/4/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.301323" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/${survey_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.222031" elapsed="0.079311"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.301401" elapsed="0.000036"/>
+</return>
+<msg time="2025-08-02T22:28:17.301546" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${survey_id}</arg>
+<doc>Elimina una encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:17.221812" elapsed="0.079752"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.302328" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.301939" elapsed="0.000425"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.302817" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.302494" elapsed="0.000360"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.301700" elapsed="0.001207"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.303050" level="INFO">Test Answers exitoso en intento 1</msg>
+<arg>Test Answers exitoso en intento ${intento}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.302975" elapsed="0.000108"/>
+</kw>
+<break>
+<status status="PASS" start="2025-08-02T22:28:17.303115" elapsed="0.000030"/>
+</break>
+<status status="PASS" start="2025-08-02T22:28:16.794074" elapsed="0.509093"/>
+</branch>
+<branch type="EXCEPT" assign="${error}">
+<kw name="Log" owner="BuiltIn">
+<arg>Error en intento ${intento}: ${error}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:17.303270" elapsed="0.000012"/>
+</kw>
+<if>
+<branch type="IF" condition="${intento} == ${MAX_REINTENTOS}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Test Answers falló después de ${MAX_REINTENTOS} intentos. Último error: ${error}</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:17.303395" elapsed="0.000013"/>
+</kw>
+<status status="NOT RUN" start="2025-08-02T22:28:17.303332" elapsed="0.000097"/>
+</branch>
+<status status="NOT RUN" start="2025-08-02T22:28:17.303320" elapsed="0.000125"/>
+</if>
+<kw name="Sleep" owner="BuiltIn">
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:17.303493" elapsed="0.000011"/>
+</kw>
+<status status="NOT RUN" start="2025-08-02T22:28:17.303201" elapsed="0.000322"/>
+</branch>
+<status status="PASS" start="2025-08-02T22:28:16.794057" elapsed="0.509487"/>
+</try>
+<var name="${intento}">1</var>
+<status status="PASS" start="2025-08-02T22:28:16.794035" elapsed="0.509530"/>
+</iter>
+<var>${intento}</var>
+<value>1</value>
+<value>${MAX_REINTENTOS + 1}</value>
+<status status="PASS" start="2025-08-02T22:28:16.793508" elapsed="0.510081"/>
+</for>
+<doc>Verificar creación de respuestas en el endpoint /answers/</doc>
+<status status="PASS" start="2025-08-02T22:28:16.793171" elapsed="0.510700"/>
+</test>
+<test id="s1-t5" name="Test Endpoint /Reports/" line="251">
+<for flavor="IN RANGE">
+<iter>
+<try>
+<branch type="TRY">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.305584" level="INFO">Intento 1 de 3 - Test Reports</msg>
+<arg>Intento ${intento} de ${MAX_REINTENTOS} - Test Reports</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.305468" elapsed="0.000151"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.305784" level="INFO">Creating Session using : alias=surveys_session, url=http://localhost:8000/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${URL_SURVEYS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-02T22:28:17.305686" elapsed="0.000214"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.306060" level="INFO">Creating Session using : alias=answers_session, url=http://localhost:8001/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>${SESION_ANSWERS}</arg>
+<arg>${URL_ANSWERS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-02T22:28:17.305967" elapsed="0.000169"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.306299" level="INFO">Creating Session using : alias=reports_session, url=http://localhost:8002/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>${SESION_REPORTS}</arg>
+<arg>${URL_REPORTS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-02T22:28:17.306202" elapsed="0.000167"/>
+</kw>
+<kw name="Crear Survey" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.337677" level="INFO">POST Request : url=http://localhost:8000/api/surveys/ 
+ path_url=/api/surveys/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '93', 'Content-Type': 'application/json'} 
+ body=b'{"name": "Encuesta Para TEST", "description": "Descripci\\u00f3n de la encuesta para pruebas"}' 
+ </msg>
+<msg time="2025-08-02T22:28:17.337756" level="INFO">POST Response : url=http://localhost:8000/api/surveys/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '151', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":5,"questions":[],"name":"Encuesta Para TEST","description":"Descripción de la encuesta para pruebas","created_at":"2025-08-03T03:28:17.319152Z"} 
+ </msg>
+<msg time="2025-08-02T22:28:17.337865" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/</arg>
+<arg>json=${survey_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.306676" elapsed="0.031209"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.337951" elapsed="0.000039"/>
+</return>
+<msg time="2025-08-02T22:28:17.338095" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${DATOS_SURVEY}</arg>
+<doc>Crea una nueva encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:17.306483" elapsed="0.031629"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.339027" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.338527" elapsed="0.000544"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.339503" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.339155" elapsed="0.000397"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.338258" elapsed="0.001341"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:17.340057" level="INFO">${survey_id} = 5</msg>
+<var>${survey_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.339676" elapsed="0.000400"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:17.340348" level="INFO">${question_data} = {'text': '¿Te gusta programar?', 'question_type': 'Cerrada'}</msg>
+<var>${question_data}</var>
+<arg>${DATOS_QUESTION}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.340225" elapsed="0.000141"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${question_data}</arg>
+<arg>survey=${survey_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.340432" elapsed="0.000113"/>
+</kw>
+<kw name="Crear Question" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.453460" level="INFO">POST Request : url=http://localhost:8000/api/questions/ 
+ path_url=/api/questions/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '78', 'Content-Type': 'application/json'} 
+ body=b'{"text": "\\u00bfTe gusta programar?", "question_type": "Cerrada", "survey": 5}' 
+ </msg>
+<msg time="2025-08-02T22:28:17.453538" level="INFO">POST Response : url=http://localhost:8000/api/questions/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '132', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":4,"options":[],"text":"¿Te gusta programar?","question_type":"Cerrada","created_at":"2025-08-03T03:28:17.388633Z","survey":5} 
+ </msg>
+<msg time="2025-08-02T22:28:17.453656" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/</arg>
+<arg>json=${question_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.340866" elapsed="0.112812"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.453746" elapsed="0.000036"/>
+</return>
+<msg time="2025-08-02T22:28:17.453889" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${question_data}</arg>
+<doc>Crea una nueva pregunta</doc>
+<status status="PASS" start="2025-08-02T22:28:17.340670" elapsed="0.113235"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.454701" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.454304" elapsed="0.000434"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.455171" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.454833" elapsed="0.000368"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.454061" elapsed="0.001180"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:17.455676" level="INFO">${question_id} = 4</msg>
+<var>${question_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.455306" elapsed="0.000388"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:17.455878" level="INFO">${option_data} = {'text': 'Si'}</msg>
+<var>${option_data}</var>
+<arg>${DATOS_OPTION_SI}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.455761" elapsed="0.000133"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${option_data}</arg>
+<arg>question=${question_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.455959" elapsed="0.000109"/>
+</kw>
+<kw name="Crear Option" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.574313" level="INFO">POST Request : url=http://localhost:8000/api/options/ 
+ path_url=/api/options/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '29', 'Content-Type': 'application/json'} 
+ body=b'{"text": "Si", "question": 4}' 
+ </msg>
+<msg time="2025-08-02T22:28:17.574391" level="INFO">POST Response : url=http://localhost:8000/api/options/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '76', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":3,"text":"Si","created_at":"2025-08-03T03:28:17.507894Z","question":4} 
+ </msg>
+<msg time="2025-08-02T22:28:17.574502" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/options/</arg>
+<arg>json=${option_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.456361" elapsed="0.118163"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.574593" elapsed="0.000040"/>
+</return>
+<msg time="2025-08-02T22:28:17.574754" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${option_data}</arg>
+<doc>Crea una nueva opción</doc>
+<status status="PASS" start="2025-08-02T22:28:17.456175" elapsed="0.118598"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.576141" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.575465" elapsed="0.000746"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.576948" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.576358" elapsed="0.000647"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.574956" elapsed="0.002122"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:17.577626" level="INFO">${option_id} = 3</msg>
+<var>${option_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.577195" elapsed="0.000450"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:17.577862" level="INFO">${answer_data} = {'id_question': '1', 'id_option': '1', 'answer': None}</msg>
+<var>${answer_data}</var>
+<arg>${DATOS_ANSWER_CERRADA}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.577728" elapsed="0.000153"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${answer_data}</arg>
+<arg>id_question=${question_id}</arg>
+<arg>id_option=${option_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.578017" elapsed="0.000151"/>
+</kw>
+<kw name="Crear Answer" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.601238" level="INFO">POST Request : url=http://localhost:8001/api/answers/ 
+ path_url=/api/answers/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '50', 'Content-Type': 'application/json'} 
+ body=b'{"id_question": 4, "id_option": 3, "answer": null}' 
+ </msg>
+<msg time="2025-08-02T22:28:17.601327" level="INFO">POST Response : url=http://localhost:8001/api/answers/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'POST, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '52', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":2,"id_question":4,"id_option":3,"answer":null} 
+ </msg>
+<msg time="2025-08-02T22:28:17.601492" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/answers/</arg>
+<arg>json=${answer_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.578508" elapsed="0.023028"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.601622" elapsed="0.000044"/>
+</return>
+<msg time="2025-08-02T22:28:17.601829" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_ANSWERS}</arg>
+<arg>${answer_data}</arg>
+<doc>Crea una nueva respuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:17.578296" elapsed="0.023553"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.603288" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.602852" elapsed="0.000486"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.603886" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.603445" elapsed="0.000481"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.601996" elapsed="0.001981"/>
+</kw>
+<kw name="Obtener Report" owner="keywords_api_surveys">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.626356" level="INFO">GET Request : url=http://localhost:8002/api/reports/5/ 
+ path_url=/api/reports/5/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.626438" level="INFO">GET Response : url=http://localhost:8002/api/reports/5/ 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '186', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"encuesta":{"id":5,"nombre":"Encuesta Para TEST","preguntas":{"4":{"pregunta":"¿Te gusta programar?","tipo":"Cerrada","opciones":{"3":"Si"},"respuestas":["Si"],"total_respuestas":1}}}} 
+ </msg>
+<msg time="2025-08-02T22:28:17.626552" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/reports/${survey_id}/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.604377" elapsed="0.022201"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.626644" elapsed="0.000042"/>
+</return>
+<msg time="2025-08-02T22:28:17.626808" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_REPORTS}</arg>
+<arg>${survey_id}</arg>
+<doc>Obtiene el reporte de una encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:17.604131" elapsed="0.022695"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.627662" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.627246" elapsed="0.000461"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.628125" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.627797" elapsed="0.000361"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.626975" elapsed="0.001225"/>
+</kw>
+<kw name="Eliminar Option" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.654112" level="INFO">DELETE Request : url=http://localhost:8000/api/options/3/ 
+ path_url=/api/options/3/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.654190" level="INFO">DELETE Response : url=http://localhost:8000/api/options/3/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.654329" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/options/${option_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.628529" elapsed="0.025832"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.654430" elapsed="0.000042"/>
+</return>
+<msg time="2025-08-02T22:28:17.654598" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${option_id}</arg>
+<doc>Elimina una opción</doc>
+<status status="PASS" start="2025-08-02T22:28:17.628319" elapsed="0.026297"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.655505" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.655073" elapsed="0.000477"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.656125" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.655732" elapsed="0.000430"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.654815" elapsed="0.001394"/>
+</kw>
+<kw name="Eliminar Question" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.730090" level="INFO">DELETE Request : url=http://localhost:8000/api/questions/4/ 
+ path_url=/api/questions/4/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.730164" level="INFO">DELETE Response : url=http://localhost:8000/api/questions/4/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.730282" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/${question_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.656588" elapsed="0.073717"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.730375" elapsed="0.000046"/>
+</return>
+<msg time="2025-08-02T22:28:17.730549" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${question_id}</arg>
+<doc>Elimina una pregunta</doc>
+<status status="PASS" start="2025-08-02T22:28:17.656351" elapsed="0.074217"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.731449" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.731016" elapsed="0.000479"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.731951" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.731593" elapsed="0.000393"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.730726" elapsed="0.001306"/>
+</kw>
+<kw name="Eliminar Survey" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.809586" level="INFO">DELETE Request : url=http://localhost:8000/api/surveys/5/ 
+ path_url=/api/surveys/5/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.809660" level="INFO">DELETE Response : url=http://localhost:8000/api/surveys/5/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.809768" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/${survey_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.732372" elapsed="0.077417"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.809853" elapsed="0.000039"/>
+</return>
+<msg time="2025-08-02T22:28:17.810005" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${survey_id}</arg>
+<doc>Elimina una encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:17.732156" elapsed="0.077867"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.810800" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.810398" elapsed="0.000443"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.811294" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.810939" elapsed="0.000388"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.810164" elapsed="0.001205"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.811530" level="INFO">Test Reports exitoso en intento 1</msg>
+<arg>Test Reports exitoso en intento ${intento}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.811443" elapsed="0.000114"/>
+</kw>
+<break>
+<status status="PASS" start="2025-08-02T22:28:17.811592" elapsed="0.000029"/>
+</break>
+<status status="PASS" start="2025-08-02T22:28:17.305396" elapsed="0.506248"/>
+</branch>
+<branch type="EXCEPT" assign="${error}">
+<kw name="Log" owner="BuiltIn">
+<arg>Error en intento ${intento}: ${error}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:17.811751" elapsed="0.000013"/>
+</kw>
+<if>
+<branch type="IF" condition="${intento} == ${MAX_REINTENTOS}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Test Reports falló después de ${MAX_REINTENTOS} intentos. Último error: ${error}</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:17.811884" elapsed="0.000012"/>
+</kw>
+<status status="NOT RUN" start="2025-08-02T22:28:17.811818" elapsed="0.000099"/>
+</branch>
+<status status="NOT RUN" start="2025-08-02T22:28:17.811803" elapsed="0.000132"/>
+</if>
+<kw name="Sleep" owner="BuiltIn">
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:17.811985" elapsed="0.000011"/>
+</kw>
+<status status="NOT RUN" start="2025-08-02T22:28:17.811682" elapsed="0.000332"/>
+</branch>
+<status status="PASS" start="2025-08-02T22:28:17.305374" elapsed="0.506664"/>
+</try>
+<var name="${intento}">1</var>
+<status status="PASS" start="2025-08-02T22:28:17.305347" elapsed="0.506713"/>
+</iter>
+<var>${intento}</var>
+<value>1</value>
+<value>${MAX_REINTENTOS + 1}</value>
+<status status="PASS" start="2025-08-02T22:28:17.304730" elapsed="0.507354"/>
+</for>
+<doc>Verificar obtención de reportes en el endpoint /reports/</doc>
+<status status="PASS" start="2025-08-02T22:28:17.304431" elapsed="0.507894"/>
+</test>
+<test id="s1-t6" name="Test FaaS Export Function" line="307">
+<for flavor="IN RANGE">
+<iter>
+<try>
+<branch type="TRY">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.813870" level="INFO">Intento 1 de 3 - Test FaaS Export</msg>
+<arg>Intento ${intento} de ${MAX_REINTENTOS} - Test FaaS Export</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.813746" elapsed="0.000168"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.814088" level="INFO">Creating Session using : alias=surveys_session, url=http://localhost:8000/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${URL_SURVEYS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-02T22:28:17.813985" elapsed="0.000213"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.814358" level="INFO">Creating Session using : alias=answers_session, url=http://localhost:8001/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>${SESION_ANSWERS}</arg>
+<arg>${URL_ANSWERS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-02T22:28:17.814265" elapsed="0.000171"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.814588" level="INFO">Creating Session using : alias=faas_session, url=http://localhost:8003, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>${SESION_FAAS}</arg>
+<arg>${URL_FAAS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-02T22:28:17.814501" elapsed="0.000156"/>
+</kw>
+<kw name="Health Check FaaS" owner="keywords_faas">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.825640" level="INFO">GET Request : url=http://localhost:8003/ 
+ path_url=/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:17.825715" level="INFO">GET Response : url=http://localhost:8003/ 
+ status=200, reason=OK 
+ headers={'date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'server': 'uvicorn', 'content-length': '44', 'content-type': 'application/json'} 
+ body={"status":"healthy","service":"ExportCsvFn"} 
+ </msg>
+<msg time="2025-08-02T22:28:17.825827" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.814969" elapsed="0.010879"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.825913" elapsed="0.000041"/>
+</return>
+<msg time="2025-08-02T22:28:17.826074" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_FAAS}</arg>
+<doc>Verifica que el servicio FaaS esté funcionando</doc>
+<status status="PASS" start="2025-08-02T22:28:17.814787" elapsed="0.011306"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.826943" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.826515" elapsed="0.000484"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.827450" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.827097" elapsed="0.000388"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.826249" elapsed="0.001280"/>
+</kw>
+<kw name="Crear Survey" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.860282" level="INFO">POST Request : url=http://localhost:8000/api/surveys/ 
+ path_url=/api/surveys/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '93', 'Content-Type': 'application/json'} 
+ body=b'{"name": "Encuesta Para TEST", "description": "Descripci\\u00f3n de la encuesta para pruebas"}' 
+ </msg>
+<msg time="2025-08-02T22:28:17.860373" level="INFO">POST Response : url=http://localhost:8000/api/surveys/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '151', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":6,"questions":[],"name":"Encuesta Para TEST","description":"Descripción de la encuesta para pruebas","created_at":"2025-08-03T03:28:17.839379Z"} 
+ </msg>
+<msg time="2025-08-02T22:28:17.860514" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/</arg>
+<arg>json=${survey_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.827895" elapsed="0.032847"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.860840" elapsed="0.000076"/>
+</return>
+<msg time="2025-08-02T22:28:17.861086" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${DATOS_SURVEY}</arg>
+<doc>Crea una nueva encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:17.827656" elapsed="0.033453"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.862287" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.861677" elapsed="0.000669"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.862852" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.862464" elapsed="0.000426"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.861350" elapsed="0.001587"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:17.863480" level="INFO">${survey_id} = 6</msg>
+<var>${survey_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.863026" elapsed="0.000474"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:17.863712" level="INFO">${question_data} = {'text': '¿Te gusta programar?', 'question_type': 'Cerrada'}</msg>
+<var>${question_data}</var>
+<arg>${DATOS_QUESTION}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.863585" elapsed="0.000145"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${question_data}</arg>
+<arg>survey=${survey_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.863975" elapsed="0.000144"/>
+</kw>
+<kw name="Crear Question" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:17.983582" level="INFO">POST Request : url=http://localhost:8000/api/questions/ 
+ path_url=/api/questions/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '78', 'Content-Type': 'application/json'} 
+ body=b'{"text": "\\u00bfTe gusta programar?", "question_type": "Cerrada", "survey": 6}' 
+ </msg>
+<msg time="2025-08-02T22:28:17.983676" level="INFO">POST Response : url=http://localhost:8000/api/questions/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '132', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":5,"options":[],"text":"¿Te gusta programar?","question_type":"Cerrada","created_at":"2025-08-03T03:28:17.918496Z","survey":6} 
+ </msg>
+<msg time="2025-08-02T22:28:17.983809" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/</arg>
+<arg>json=${question_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.864468" elapsed="0.119361"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:17.983891" elapsed="0.000049"/>
+</return>
+<msg time="2025-08-02T22:28:17.984048" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${question_data}</arg>
+<doc>Crea una nueva pregunta</doc>
+<status status="PASS" start="2025-08-02T22:28:17.864252" elapsed="0.119813"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.984826" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.984424" elapsed="0.000440"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:17.985232" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.984938" elapsed="0.000323"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:17.984203" elapsed="0.001094"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:17.985799" level="INFO">${question_id} = 5</msg>
+<var>${question_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.985421" elapsed="0.000395"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:17.985993" level="INFO">${option_data} = {'text': 'Si'}</msg>
+<var>${option_data}</var>
+<arg>${DATOS_OPTION_SI}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.985885" elapsed="0.000124"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${option_data}</arg>
+<arg>question=${question_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.986070" elapsed="0.000105"/>
+</kw>
+<kw name="Crear Option" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:18.103604" level="INFO">POST Request : url=http://localhost:8000/api/options/ 
+ path_url=/api/options/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '29', 'Content-Type': 'application/json'} 
+ body=b'{"text": "Si", "question": 5}' 
+ </msg>
+<msg time="2025-08-02T22:28:18.103700" level="INFO">POST Response : url=http://localhost:8000/api/options/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:18 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'GET, POST, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '76', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":4,"text":"Si","created_at":"2025-08-03T03:28:18.038473Z","question":5} 
+ </msg>
+<msg time="2025-08-02T22:28:18.103836" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/options/</arg>
+<arg>json=${option_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:17.986961" elapsed="0.116906"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:18.103931" elapsed="0.000040"/>
+</return>
+<msg time="2025-08-02T22:28:18.104114" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${option_data}</arg>
+<doc>Crea una nueva opción</doc>
+<status status="PASS" start="2025-08-02T22:28:17.986295" elapsed="0.117839"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.104943" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.104540" elapsed="0.000444"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.105455" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.105113" elapsed="0.000374"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:18.104294" elapsed="0.001234"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:18.105988" level="INFO">${option_id} = 4</msg>
+<var>${option_id}</var>
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.105602" elapsed="0.000404"/>
+</kw>
+<kw name="Copy Dictionary" owner="Collections">
+<msg time="2025-08-02T22:28:18.106200" level="INFO">${answer_data} = {'id_question': '1', 'id_option': '1', 'answer': None}</msg>
+<var>${answer_data}</var>
+<arg>${DATOS_ANSWER_CERRADA}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.106085" elapsed="0.000132"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${answer_data}</arg>
+<arg>id_question=${question_id}</arg>
+<arg>id_option=${option_id}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.106279" elapsed="0.000142"/>
+</kw>
+<kw name="Crear Answer" owner="keywords_api_surveys">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:18.129715" level="INFO">POST Request : url=http://localhost:8001/api/answers/ 
+ path_url=/api/answers/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '50', 'Content-Type': 'application/json'} 
+ body=b'{"id_question": 5, "id_option": 4, "answer": null}' 
+ </msg>
+<msg time="2025-08-02T22:28:18.129788" level="INFO">POST Response : url=http://localhost:8001/api/answers/ 
+ status=201, reason=Created 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:18 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Content-Type': 'application/json', 'Vary': 'Accept, Cookie', 'Allow': 'POST, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '52', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id":3,"id_question":5,"id_option":4,"answer":null} 
+ </msg>
+<msg time="2025-08-02T22:28:18.129896" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/answers/</arg>
+<arg>json=${answer_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.106796" elapsed="0.023121"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:18.129979" elapsed="0.000038"/>
+</return>
+<msg time="2025-08-02T22:28:18.130124" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_ANSWERS}</arg>
+<arg>${answer_data}</arg>
+<doc>Crea una nueva respuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:18.106598" elapsed="0.023544"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.130938" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.130536" elapsed="0.000441"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.131368" level="INFO">Validación de respuesta exitosa: 201</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.131063" elapsed="0.000336"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:18.130285" elapsed="0.001153"/>
+</kw>
+<kw name="Exportar Survey a CSV" owner="keywords_faas">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:18.272474" level="INFO">POST Request : url=http://localhost:8003/exports/6 
+ path_url=/exports/6 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:18.272562" level="INFO">POST Response : url=http://localhost:8003/exports/6 
+ status=200, reason=OK 
+ headers={'date': 'Sun, 03 Aug 2025 03:28:17 GMT', 'server': 'uvicorn', 'content-length': '117', 'content-type': 'application/json'} 
+ body={"status":"success","message":"CSV export completed for survey 6","file_path":"exports/encuesta_6.csv","survey_id":6} 
+ </msg>
+<msg time="2025-08-02T22:28:18.272700" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/exports/${survey_id}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.131733" elapsed="0.141023"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:18.272831" elapsed="0.000046"/>
+</return>
+<msg time="2025-08-02T22:28:18.273019" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_FAAS}</arg>
+<arg>${survey_id}</arg>
+<doc>Exporta una encuesta a formato CSV</doc>
+<status status="PASS" start="2025-08-02T22:28:18.131545" elapsed="0.141498"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.273791" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.273406" elapsed="0.000421"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.274195" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.273895" elapsed="0.000337"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:18.273190" elapsed="0.001078"/>
+</kw>
+<kw name="Verificar Estado Exportacion" owner="keywords_faas">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:18.276874" level="INFO">GET Request : url=http://localhost:8003/exports/6/status 
+ path_url=/exports/6/status 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:18.276919" level="INFO">GET Response : url=http://localhost:8003/exports/6/status 
+ status=200, reason=OK 
+ headers={'date': 'Sun, 03 Aug 2025 03:28:18 GMT', 'server': 'uvicorn', 'content-length': '85', 'content-type': 'application/json'} 
+ body={"status":"exists","survey_id":6,"file_path":"exports/encuesta_6.csv","file_size":40} 
+ </msg>
+<msg time="2025-08-02T22:28:18.276994" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/exports/${survey_id}/status</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.274549" elapsed="0.002462"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:18.277055" elapsed="0.000029"/>
+</return>
+<msg time="2025-08-02T22:28:18.277173" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_FAAS}</arg>
+<arg>${survey_id}</arg>
+<doc>Verifica el estado de una exportación CSV</doc>
+<status status="PASS" start="2025-08-02T22:28:18.274370" elapsed="0.002819"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.277839" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.277481" elapsed="0.000393"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.278236" level="INFO">Validación de respuesta exitosa: 200</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.277944" elapsed="0.000321"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:18.277297" elapsed="0.001003"/>
+</kw>
+<kw name="Eliminar Option" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:18.302571" level="INFO">DELETE Request : url=http://localhost:8000/api/options/4/ 
+ path_url=/api/options/4/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:18.302695" level="INFO">DELETE Response : url=http://localhost:8000/api/options/4/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:18 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:18.302801" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/options/${option_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.278586" elapsed="0.024235"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:18.302878" elapsed="0.000036"/>
+</return>
+<msg time="2025-08-02T22:28:18.303016" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${option_id}</arg>
+<doc>Elimina una opción</doc>
+<status status="PASS" start="2025-08-02T22:28:18.278404" elapsed="0.024629"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.303759" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.303388" elapsed="0.000407"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.304181" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.303865" elapsed="0.000347"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:18.303174" elapsed="0.001075"/>
+</kw>
+<kw name="Eliminar Question" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:18.370071" level="INFO">DELETE Request : url=http://localhost:8000/api/questions/5/ 
+ path_url=/api/questions/5/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:18.370142" level="INFO">DELETE Response : url=http://localhost:8000/api/questions/5/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:18 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:18.370248" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/questions/${question_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.304534" elapsed="0.065734"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:18.370328" elapsed="0.000037"/>
+</return>
+<msg time="2025-08-02T22:28:18.370472" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${question_id}</arg>
+<doc>Elimina una pregunta</doc>
+<status status="PASS" start="2025-08-02T22:28:18.304349" elapsed="0.066142"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.371236" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.370852" elapsed="0.000424"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.371661" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.371347" elapsed="0.000345"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:18.370626" elapsed="0.001105"/>
+</kw>
+<kw name="Eliminar Survey" owner="keywords_api_surveys">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-08-02T22:28:18.441485" level="INFO">DELETE Request : url=http://localhost:8000/api/surveys/6/ 
+ path_url=/api/surveys/6/ 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:18.441566" level="INFO">DELETE Response : url=http://localhost:8000/api/surveys/6/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Sun, 03 Aug 2025 03:28:18 GMT', 'Server': 'WSGIServer/0.2 CPython/3.11.13', 'Vary': 'Accept, Cookie', 'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2025-08-02T22:28:18.441706" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${session}</arg>
+<arg>/surveys/${survey_id}/</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.372025" elapsed="0.069708"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-02T22:28:18.441806" elapsed="0.000045"/>
+</return>
+<msg time="2025-08-02T22:28:18.441988" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>${SESION_SURVEYS}</arg>
+<arg>${survey_id}</arg>
+<doc>Elimina una encuesta</doc>
+<status status="PASS" start="2025-08-02T22:28:18.371839" elapsed="0.070173"/>
+</kw>
+<kw name="Validar Respuesta" owner="keywords_api_surveys">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.442814" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.442434" elapsed="0.000417"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.443218" level="INFO">Validación de respuesta exitosa: 204</msg>
+<arg>Validación de respuesta exitosa: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.442921" elapsed="0.000335"/>
+</kw>
+<arg>${response}</arg>
+<arg>204</arg>
+<doc>Valida que el código de estado de la respuesta sea el esperado</doc>
+<status status="PASS" start="2025-08-02T22:28:18.442192" elapsed="0.001100"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-02T22:28:18.443424" level="INFO">Test FaaS Export exitoso en intento 1</msg>
+<arg>Test FaaS Export exitoso en intento ${intento}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-02T22:28:18.443351" elapsed="0.000098"/>
+</kw>
+<break>
+<status status="PASS" start="2025-08-02T22:28:18.443534" elapsed="0.000025"/>
+</break>
+<status status="PASS" start="2025-08-02T22:28:17.813671" elapsed="0.629910"/>
+</branch>
+<branch type="EXCEPT" assign="${error}">
+<kw name="Log" owner="BuiltIn">
+<arg>Error en intento ${intento}: ${error}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:18.443670" elapsed="0.000012"/>
+</kw>
+<if>
+<branch type="IF" condition="${intento} == ${MAX_REINTENTOS}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Test FaaS Export falló después de ${MAX_REINTENTOS} intentos. Último error: ${error}</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:18.443789" elapsed="0.000011"/>
+</kw>
+<status status="NOT RUN" start="2025-08-02T22:28:18.443730" elapsed="0.000090"/>
+</branch>
+<status status="NOT RUN" start="2025-08-02T22:28:18.443717" elapsed="0.000119"/>
+</if>
+<kw name="Sleep" owner="BuiltIn">
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2025-08-02T22:28:18.443887" elapsed="0.000011"/>
+</kw>
+<status status="NOT RUN" start="2025-08-02T22:28:18.443617" elapsed="0.000299"/>
+</branch>
+<status status="PASS" start="2025-08-02T22:28:17.813648" elapsed="0.630288"/>
+</try>
+<var name="${intento}">1</var>
+<status status="PASS" start="2025-08-02T22:28:17.813622" elapsed="0.630334"/>
+</iter>
+<var>${intento}</var>
+<value>1</value>
+<value>${MAX_REINTENTOS + 1}</value>
+<status status="PASS" start="2025-08-02T22:28:17.813011" elapsed="0.630968"/>
+</for>
+<doc>Verificar la función FaaS de exportación a CSV</doc>
+<status status="PASS" start="2025-08-02T22:28:17.812754" elapsed="0.631475"/>
+</test>
+<status status="PASS" start="2025-08-02T22:28:14.407269" elapsed="4.037607"/>
+</suite>
+<statistics>
+<total>
+<stat pass="6" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Tests" id="s1" pass="6" fail="0" skip="0">Tests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
