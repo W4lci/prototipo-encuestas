@@ -15,10 +15,14 @@ services:
       - GF_SMTP_HOST=mailhog:1025
       - GF_SMTP_FROM_ADDRESS=admin@grafana.localhost
       - GF_SMTP_FROM_NAME=Grafana
+      - GF_SECURITY_ADMIN_PASSWORD=admin
     ports:
       - "3000:3000"
     volumes:
-      - grafana-storage:/var/lib/grafana
+      - grafana-storage3:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+
     depends_on:
       - node_exporter
       - mailhog
@@ -42,4 +46,4 @@ services:
       - "8025:8025"
 
 volumes:
-  grafana-storage:
+  grafana-storage3:
