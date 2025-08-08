@@ -37,11 +37,20 @@ curl http://localhost:9090  # Prometheus
 curl http://localhost:9100  # Node Exporter
 curl http://localhost:8025  # MailHog
 ```
-## ¿Como saber si está vigilando a la APP? 
-    - Entrar a http://localhost:3000, ir a los graficos
-    - Utilizar una forma de simular conexiones, como wrk
-  
----
+## ¿Cómo saber si está vigilando a la APP? 
+
+### **Opción 1: Verificación Manual**
+- Entrar a http://localhost:3000, ir a los gráficos
+- Hacer algunas requests manuales a la aplicación
+- Observar si los paneles muestran actividad
+
+### **Opción 2: Simulación Automatizada de Carga** 
+
+#### **Bash Script**
+```bash
+# Ejecutar (requiere wrk instalado)
+./simulate_load.sh
+```
 
 ## Variables y Puertos
 
