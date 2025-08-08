@@ -1,0 +1,11 @@
+apiVersion: 1
+contactPoints:
+    - orgId: 1
+      name: Alertas
+      receivers:
+        - uid: beucf6cqi8dfke
+          type: email
+          settings:
+            addresses: alertas@encuestas.com
+            singleEmail: false
+          disableResolveMessage: false

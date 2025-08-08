@@ -9,5 +9,5 @@ router.register(r'questions', QuestionViewSet)
 router.register(r'options', OptionViewSet)
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
 ]

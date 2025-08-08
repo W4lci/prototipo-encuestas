@@ -45,6 +45,7 @@ services:
       db_survey:
         condition: service_healthy
 
+
   answer:
     build:
       context: ./
@@ -85,4 +86,3 @@ services:
       dockerfile: ./ExportCsvFn/dockerfile
     ports:
       - "8003:8000"
-

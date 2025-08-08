@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_extensions",
     "Survey",  # SOLO Survey
+    "django_prometheus",  # Para métricas de Prometheus
 ]
 
 # URLs específicas para Survey

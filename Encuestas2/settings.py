@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-kvh8=^qo0qp^de6+7ni8w6(5ccucmapzya!@h%0s4bnv2=qvx*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.219.1", "localhost", "127.0.0.1", "survey", "answer", "reprts", "exportcsvfn", "*"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -45,9 +45,11 @@ INSTALLED_APPS = [
     "Survey",
     "Answer",
     "Report",
+    "django_prometheus",
 ]
 
 MIDDLEWARE = [
+    "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -55,6 +57,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_prometheus.middleware.PrometheusAfterMiddleware",
 ]
 
 ROOT_URLCONF = "Encuestas2.urls"

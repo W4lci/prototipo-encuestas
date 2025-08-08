@@ -23,5 +23,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("Survey.urls")),
     path("api/", include("Answer.urls")),
-    path("api/", include("Report.urls")),
+    path("api/", include("Report.urls")),  # Para las métricas de Prometheus
 ]
